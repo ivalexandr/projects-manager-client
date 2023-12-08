@@ -4,6 +4,9 @@
   "newProjectRoot": "projects",
   "projects": {
     "projects-manager-client": {
+      "i18n": {
+        "sourceLocale": "ru-RU"
+      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -30,6 +33,7 @@
               "src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/purple-green.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -90,12 +94,28 @@
               "src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/purple-green.css",
               "src/styles.scss"
             ],
             "scripts": []
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "06dc44f3-7d14-49d5-8af4-3def0e8e8126",
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

@@ -1,0 +1,9 @@
+{
+  "extends": "stylelint-config-standard-scss",
+  "rules": {
+    "at-rule-empty-line-before": null
+  },
+  "ignoreFiles": [
+    "src/styles.scss"
+  ]
+}
