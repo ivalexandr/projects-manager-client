@@ -1,0 +1,122 @@
+<h3 matDialogTitle>
+  @if (isRegisterForm()) {
+  {{ componentText.register.title }}
+  } @else {
+  {{ componentText.login.title }}
+  }
+</h3>
+<section matDialogContent>
+  <form
+    [formGroup]="authForm"
+    class="dialog-form"
+    (ngSubmit)="submitAuthFormHandler()"
+  >
+    <mat-form-field>
+      <mat-label>
+        @if (isRegisterForm()) {
+        {{ componentText.register.email }}
+        } @else {
+        {{ componentText.login.email }}
+        }
+      </mat-label>
+      <input matInput type="email" formControlName="email" />
+    </mat-form-field>
+    @if (emailFromForm.hasError('required')) {
+    <span class="dialog-form_error">{{ componentText.errors.required }}</span>
+    } @else if (emailFromForm.hasError('email')) {
+    <span class="dialog-form_error">{{ componentText.errors.email }}</span>
+    }
+    <mat-form-field>
+      <mat-label>
+        @if (isRegisterForm()) {
+        {{ componentText.register.password }}
+        } @else {
+        {{ componentText.login.password }}
+        }
+      </mat-label>
+      <input
+        matInput
+        [type]="isVisibilityPassword() ? 'text' : 'password'"
+        formControlName="password"
+      />
+      <button
+        type="button"
+        matSuffix
+        mat-icon-button
+        (click)="visiblePassword()"
+      >
+        @if (isVisibilityPassword()) {
+        <mat-icon>visibility_off</mat-icon>
+        } @else {
+        <mat-icon>visibility</mat-icon>
+        }
+      </button>
+    </mat-form-field>
+    @if (passwordFromForm.hasError('required')) {
+    <span class="dialog-form_error">{{ componentText.errors.required }}</span>
+    } @else if (passwordFromForm.hasError('minLength') ||
+    passwordFromForm.hasError('maxLength') ||
+    passwordFromForm.hasError('pattern')) {
+    <span class="dialog-form_error">{{
+      componentText.errors.passwordMust
+    }}</span>
+    }@if (isRegisterForm()) {
+    <mat-form-field>
+      <mat-label>{{ componentText.register.repeatPass }}</mat-label>
+      <input
+        matInput
+        [type]="isVisibilityRepeatPassword() ? 'text' : 'password'"
+        formControlName="repeatPassword"
+      />
+      <button
+        type="button"
+        matSuffix
+        mat-icon-button
+        (click)="visibleRepeatPassword()"
+      >
+        @if (isVisibilityRepeatPassword()) {
+        <mat-icon>visibility_off</mat-icon>
+        } @else {
+        <mat-icon>visibility</mat-icon>
+        }
+      </button>
+    </mat-form-field>
+    @if (repeatPasswordFromForm.hasError('required')) {
+    <span class="dialog-form_error">{{ componentText.errors.required }}</span>
+    }@else if (repeatPasswordFromForm.hasError('passwordMismatch')) {
+    <span class="dialog-form_error">{{
+      componentText.errors.passwordMismatch
+    }}</span>
+    } }
+    <div matDialogActions>
+      <button
+        mat-flat-button
+        color="primary"
+        type="submit"
+        [disabled]="isInvalidForm"
+      >
+        @if (isRegisterForm()) {
+        {{ componentText.register.register }}
+        }@else {
+        {{ componentText.login.enter }}
+        }
+      </button>
+    </div>
+  </form>
+  <section class="dialog-question">
+    <p class="dialog-question__item">
+      @if (isRegisterForm()) {
+      {{ componentText.register.isAccount }}
+      } @else {
+      {{ componentText.login.isNotAccount }}
+      }
+    </p>
+    <button mat-button color="accent" (click)="changeRegisterForm()">
+      @if (isRegisterForm()) {
+      {{ componentText.register.enter }}
+      }@else {
+      {{ componentText.login.register }}
+      }
+    </button>
+  </section>
+</section>
