@@ -7,7 +7,7 @@
   "doctype-first": false,
   "tag-pair": true,
   "tag-self-close": false,
-  "empty-tag-not-self-closed": true,
+  "empty-tag-not-self-closed": false,
   "spec-char-escape": false,
   "id-unique": false,
   "src-not-empty": true,
