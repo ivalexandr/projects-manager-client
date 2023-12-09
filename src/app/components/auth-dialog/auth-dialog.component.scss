@@ -1,0 +1,27 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.dialog {
+  &-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    &_error {
+      color: #d8882c;
+    }
+  }
+
+  &-question {
+    flex: 1 1 auto;
+    margin-top: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
