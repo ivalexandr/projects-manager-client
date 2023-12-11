@@ -13,6 +13,7 @@ import {
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
+  MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
@@ -20,8 +21,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
 import { CreateUserDto, LoginUserDto } from '../../api/models';
 import * as authActions from '../../store/auth/auth.actions';
+import { NgIf } from '@angular/common';
 
-export interface IAuthForm {
+export interface ILoginForm {
+  email: AbstractControl<string>;
+  password: AbstractControl<string>;
+}
+
+export interface IRegisterForm {
   email: AbstractControl<string>;
   password: AbstractControl<string>;
   repeatPassword: AbstractControl<string>;
@@ -39,6 +46,7 @@ export interface IAuthForm {
     ReactiveFormsModule,
     MatInputModule,
     MatIconModule,
+    NgIf,
   ],
   templateUrl: './auth-dialog.component.html',
   styleUrl: './auth-dialog.component.scss',
@@ -77,7 +85,18 @@ export class AuthDialogComponent {
     },
   };
 
-  authForm = new FormGroup<IAuthForm>({
+  loginForm = new FormGroup<ILoginForm>({
+    email: new FormControl('', {
+      validators: [Validators.email, Validators.required],
+      nonNullable: true,
+    }),
+    password: new FormControl('', {
+      validators: [Validators.required],
+      nonNullable: true,
+    }),
+  });
+
+  registerForm = new FormGroup<IRegisterForm>({
     email: new FormControl('', {
       validators: [Validators.email, Validators.required],
       nonNullable: true,
@@ -92,27 +111,51 @@ export class AuthDialogComponent {
       nonNullable: true,
     }),
     repeatPassword: new FormControl('', {
-      validators: [this.matchPasswordsValidator()],
+      validators: [this.matchPasswordsValidator(), Validators.required],
       nonNullable: true,
     }),
   });
 
-  get isInvalidForm() {
-    return this.authForm.invalid;
+  get isInvalidLoginForm() {
+    return this.loginForm.invalid;
   }
 
-  get emailFromForm() {
-    return this.authForm.controls.email;
+  get isInvalidRegisterForm() {
+    return this.registerForm.invalid;
   }
 
-  get passwordFromForm() {
-    return this.authForm.controls.password;
-  }
-  get repeatPasswordFromForm() {
-    return this.authForm.controls.repeatPassword;
+  get emailLoginForm() {
+    return this.loginForm.controls.email;
   }
 
-  constructor(private readonly store: Store) {}
+  get passwordLoginForm() {
+    return this.loginForm.controls.password;
+  }
+
+  get emailRegisterForm() {
+    return this.registerForm.controls.email;
+  }
+
+  get passwordRegisterForm() {
+    return this.registerForm.controls.password;
+  }
+
+  get repeatPasswordRegisterFrom() {
+    return this.registerForm.controls.repeatPassword;
+  }
+
+  get hasRegisterPasswordErrors() {
+    return (
+      this.passwordRegisterForm.hasError('minLength') ||
+      this.passwordRegisterForm.hasError('maxLength') ||
+      this.passwordRegisterForm.hasError('pattern')
+    );
+  }
+
+  constructor(
+    private readonly store: Store,
+    private readonly dialogRef: MatDialogRef<AuthDialogComponent>
+  ) {}
 
   matchPasswordsValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -122,52 +165,47 @@ export class AuthDialogComponent {
       const password = control.parent?.get('password') as AbstractControl;
       const repeatPassword = control as AbstractControl;
 
-      return password &&
-        repeatPassword &&
-        password.value !== repeatPassword.value
+      return password && repeatPassword && password.value !== repeatPassword.value
         ? { passwordMismatch: true }
         : null;
     };
   }
 
   changeRegisterForm() {
-    this.isRegisterForm.update((state) => {
-      state &&
-        this.repeatPasswordFromForm.removeValidators([Validators.required]);
-      !state &&
-        this.repeatPasswordFromForm.addValidators([Validators.required]);
-      this.repeatPasswordFromForm.updateValueAndValidity();
-      return !state;
-    });
+    this.isRegisterForm.update(state => !state);
   }
 
   visiblePassword() {
-    this.isVisibilityPassword.update((state) => !state);
+    this.isVisibilityPassword.update(state => !state);
   }
 
   visibleRepeatPassword() {
-    this.isVisibilityRepeatPassword.update((state) => !state);
+    this.isVisibilityRepeatPassword.update(state => !state);
   }
 
-  submitAuthFormHandler() {
-    if (this.authForm.valid) {
-      if (this.isRegisterForm()) {
-        const user: CreateUserDto = {
-          email: this.emailFromForm.value,
-          password: this.passwordFromForm.value,
-        };
-        this.store.dispatch(authActions.setRegisterData(user));
-        this.store.dispatch(authActions.register());
-        this.authForm.reset();
-      } else {
-        const user: LoginUserDto = {
-          email: this.emailFromForm.value,
-          password: this.passwordFromForm.value,
-        };
-        this.store.dispatch(authActions.setLoginData(user));
-        this.store.dispatch(authActions.login());
-        this.authForm.reset();
-      }
+  submitLoginForm() {
+    if (this.loginForm.valid) {
+      const user: LoginUserDto = {
+        email: this.emailLoginForm.value,
+        password: this.passwordLoginForm.value,
+      };
+      this.store.dispatch(authActions.setLoginData(user));
+      this.store.dispatch(authActions.login());
+      this.loginForm.reset();
+      this.dialogRef.close();
+    }
+  }
+
+  submitRegisterForm() {
+    if (this.registerForm.valid) {
+      const user: CreateUserDto = {
+        email: this.emailRegisterForm.value,
+        password: this.passwordRegisterForm.value,
+      };
+      this.store.dispatch(authActions.setRegisterData(user));
+      this.store.dispatch(authActions.login());
+      this.registerForm.reset();
+      this.dialogRef.close();
     }
   }
 }

@@ -9,12 +9,12 @@ export class AuthDialogService {
 
   openDialog() {
     this.dialogRef = this.dialog.open(AuthDialogComponent, {
-      maxWidth: 700,
+      maxWidth: 750,
       width: '100%',
     });
   }
 
   closeDialog() {
-    this.dialogRef?.close();
+    if (this.dialogRef) this.dialogRef.close();
   }
 }
