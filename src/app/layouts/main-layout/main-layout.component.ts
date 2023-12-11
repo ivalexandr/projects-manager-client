@@ -6,8 +6,6 @@ import { TopBarComponent } from '../../components/top-bar/top-bar.component';
   standalone: true,
   imports: [TopBarComponent],
   templateUrl: './main-layout.component.html',
-  styleUrl: './main-layout.component.scss'
+  styleUrl: './main-layout.component.scss',
 })
-export class MainLayoutComponent {
-
-}
+export class MainLayoutComponent {}

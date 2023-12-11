@@ -59,6 +59,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "ng-openapi-gen": "^0.51.0",
+    "prettier": "^3.1.1",
     "stylelint": "^15.11.0",
     "stylelint-config-standard-scss": "^11.1.0",
     "typescript": "~5.2.2"

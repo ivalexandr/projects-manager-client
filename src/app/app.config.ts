@@ -31,8 +31,7 @@ export const appConfig: ApplicationConfig = {
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     {
       provide: APP_INITIALIZER,
-      useFactory: (appInitService: AppInitService) => () =>
-        appInitService.init(),
+      useFactory: (appInitService: AppInitService) => () => appInitService.init(),
       deps: [AppInitService],
       multi: true,
     },

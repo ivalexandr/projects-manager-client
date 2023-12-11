@@ -8,7 +8,6 @@ import { selectAuthUser, selectUserFromForm } from './auth.selectors';
 import { TAppStore } from '../../app.config';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageService } from '../../services/local-storage.service';
-import { AuthDialogService } from '../../components/auth-dialog/auth-dialog.service';
 
 @Injectable()
 export class AuthEffects {
@@ -26,14 +25,11 @@ export class AuthEffects {
             },
           })
           .pipe(
-            map((user) => {
-              this.dialogserivce.closeDialog();
+            map(user => {
               this.localStorageService.setItem('authUser', user);
               return authActions.registerSuccess({ user });
             }),
-            catchError((error: HttpErrorResponse) =>
-              of(authActions.registerFailure(error.error))
-            )
+            catchError((error: HttpErrorResponse) => of(authActions.registerFailure(error.error)))
           )
       )
     )
@@ -53,13 +49,11 @@ export class AuthEffects {
             },
           })
           .pipe(
-            map((user) => {
+            map(user => {
               this.localStorageService.setItem('authUser', user);
               return authActions.loginSuccess({ user });
             }),
-            catchError((error: HttpErrorResponse) =>
-              of(authActions.loginFailure(error.error))
-            )
+            catchError((error: HttpErrorResponse) => of(authActions.loginFailure(error.error)))
           )
       )
     )
@@ -79,7 +73,7 @@ export class AuthEffects {
             },
           })
           .pipe(
-            map((user) => {
+            map(user => {
               this.localStorageService.setItem('authUser', user);
               return authActions.refreshTokenSuccess({ user });
             }),
@@ -95,9 +89,7 @@ export class AuthEffects {
   refreshTokenTimer$ = createEffect(() =>
     this.actions$.pipe(
       ofType(authActions.refreshTokenSuccess),
-      switchMap(() =>
-        timer(3300000).pipe(map(() => authActions.refreshToken()))
-      )
+      switchMap(() => timer(3300000).pipe(map(() => authActions.refreshToken())))
     )
   );
 
@@ -115,7 +107,6 @@ export class AuthEffects {
     private readonly actions$: Actions,
     private readonly authService: AuthService,
     private readonly store: Store<TAppStore>,
-    private readonly localStorageService: LocalStorageService,
-    private readonly dialogserivce: AuthDialogService
+    private readonly localStorageService: LocalStorageService
   ) {}
 }

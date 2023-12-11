@@ -46,7 +46,7 @@ export const authReducer = createReducer(
     error,
     userFromForm: null,
   })),
-  on(authActions.resetError, (state) => ({ ...state, error: null })),
+  on(authActions.resetError, state => ({ ...state, error: null })),
   on(authActions.refreshTokenSuccess, (state, { user }) => ({
     ...state,
     user,
@@ -57,7 +57,7 @@ export const authReducer = createReducer(
     user: null,
     error,
   })),
-  on(authActions.logoutClean, (state) => ({
+  on(authActions.logoutClean, state => ({
     ...state,
     error: null,
     user: null,

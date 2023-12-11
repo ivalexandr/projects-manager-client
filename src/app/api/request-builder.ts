@@ -1,6 +1,12 @@
 /* tslint:disable */
 /* eslint-disable */
-import { HttpRequest, HttpParameterCodec, HttpParams, HttpHeaders, HttpContext } from '@angular/common/http';
+import {
+  HttpRequest,
+  HttpParameterCodec,
+  HttpParams,
+  HttpHeaders,
+  HttpContext,
+} from '@angular/common/http';
 
 /**
  * Custom parameter codec to correctly handle the plus sign in parameter
@@ -37,7 +43,13 @@ interface ParameterOptions {
  * Base class for a parameter
  */
 abstract class Parameter {
-  constructor(public name: string, public value: any, public options: ParameterOptions, defaultStyle: string, defaultExplode: boolean) {
+  constructor(
+    public name: string,
+    public value: any,
+    public options: ParameterOptions,
+    defaultStyle: string,
+    defaultExplode: boolean
+  ) {
     this.options = options || {};
     if (this.options.style === null || this.options.style === undefined) {
       this.options.style = defaultStyle;
@@ -51,13 +63,17 @@ abstract class Parameter {
     if (value === null || value === undefined) {
       return '';
     } else if (value instanceof Array) {
-      return value.map(v => this.serializeValue(v).split(separator).join(encodeURIComponent(separator))).join(separator);
+      return value
+        .map(v => this.serializeValue(v).split(separator).join(encodeURIComponent(separator)))
+        .join(separator);
     } else if (typeof value === 'object') {
       const array: string[] = [];
       for (const key of Object.keys(value)) {
         let propVal = value[key];
         if (propVal !== null && propVal !== undefined) {
-          propVal = this.serializeValue(propVal).split(separator).join(encodeURIComponent(separator));
+          propVal = this.serializeValue(propVal)
+            .split(separator)
+            .join(encodeURIComponent(separator));
           if (this.options.explode) {
             array.push(`${key}=${propVal}`);
           } else {
@@ -87,7 +103,7 @@ class PathParameter extends Parameter {
       value = '';
     }
     let prefix = this.options.style === 'label' ? '.' : '';
-    let separator = this.options.explode ? prefix === '' ? ',' : prefix : ',';
+    let separator = this.options.explode ? (prefix === '' ? ',' : prefix) : ',';
     let alreadySerialized = false;
     if (this.options.style === 'matrix') {
       // The parameter name is just used as prefix, except in some cases...
@@ -102,7 +118,7 @@ class PathParameter extends Parameter {
         } else {
           // For objects we have to put each the key / value pairs
           value = this.serializeValue(value, ';');
-          alreadySerialized = true
+          alreadySerialized = true;
         }
       }
     }
@@ -115,7 +131,10 @@ class PathParameter extends Parameter {
 
   // @ts-ignore
   serializeValue(value: any, separator = ','): string {
-    var result = typeof value === 'string' ? encodeURIComponent(value) : super.serializeValue(value, separator);
+    var result =
+      typeof value === 'string'
+        ? encodeURIComponent(value)
+        : super.serializeValue(value, separator);
     result = result.replace(/%3D/g, '=');
     result = result.replace(/%3B/g, ';');
     result = result.replace(/%2C/g, ',');
@@ -139,9 +158,12 @@ class QueryParameter extends Parameter {
           params = params.append(this.name, this.serializeValue(v));
         }
       } else {
-        const separator = this.options.style === 'spaceDelimited'
-          ? ' ' : this.options.style === 'pipeDelimited'
-            ? '|' : ',';
+        const separator =
+          this.options.style === 'spaceDelimited'
+            ? ' '
+            : this.options.style === 'pipeDelimited'
+              ? '|'
+              : ',';
         return params.append(this.name, this.serializeValue(this.value, separator));
       }
     } else if (this.value !== null && typeof this.value === 'object') {
@@ -208,7 +230,6 @@ class HeaderParameter extends Parameter {
  * Helper to build http requests from parameters
  */
 export class RequestBuilder {
-
   private _path = new Map<string, PathParameter>();
   private _query = new Map<string, QueryParameter>();
   private _header = new Map<string, HeaderParameter>();
@@ -218,8 +239,8 @@ export class RequestBuilder {
   constructor(
     public rootUrl: string,
     public operationPath: string,
-    public method: string) {
-  }
+    public method: string
+  ) {}
 
   /**
    * Sets a path parameter
@@ -251,7 +272,11 @@ export class RequestBuilder {
     } else {
       this._bodyContentType = contentType;
     }
-    if (this._bodyContentType === 'application/x-www-form-urlencoded' && value !== null && typeof value === 'object') {
+    if (
+      this._bodyContentType === 'application/x-www-form-urlencoded' &&
+      value !== null &&
+      typeof value === 'object'
+    ) {
       // Handle URL-encoded data
       const pairs: Array<[string, string]> = [];
       for (const key of Object.keys(value)) {
@@ -266,7 +291,9 @@ export class RequestBuilder {
           }
         }
       }
-      this._bodyContent = pairs.map(p => `${encodeURIComponent(p[0])}=${encodeURIComponent(p[1])}`).join('&');
+      this._bodyContent = pairs
+        .map(p => `${encodeURIComponent(p[0])}=${encodeURIComponent(p[1])}`)
+        .join('&');
     } else if (this._bodyContentType === 'multipart/form-data') {
       // Handle multipart form data
       const formData = new FormData();
@@ -303,7 +330,7 @@ export class RequestBuilder {
       return value;
     }
     if (typeof value === 'object') {
-      return new Blob([JSON.stringify(value)], {type: 'application/json'})
+      return new Blob([JSON.stringify(value)], { type: 'application/json' });
     }
     return String(value);
   }
@@ -324,7 +351,6 @@ export class RequestBuilder {
     /** Allow passing HttpContext for HttpClient */
     context?: HttpContext;
   }): HttpRequest<T> {
-
     options = options || {};
 
     // Path parameters
@@ -336,7 +362,7 @@ export class RequestBuilder {
 
     // Query parameters
     let httpParams = new HttpParams({
-      encoder: ParameterCodecInstance
+      encoder: ParameterCodecInstance,
     });
     for (const queryParam of this._query.values()) {
       httpParams = queryParam.append(httpParams);
@@ -362,7 +388,7 @@ export class RequestBuilder {
       headers: httpHeaders,
       responseType: options.responseType,
       reportProgress: options.reportProgress,
-      context: options.context
+      context: options.context,
     });
   }
 }

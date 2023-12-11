@@ -9,12 +9,6 @@ export const selectUserFromForm = createSelector(
   (state: TAuthReducer) => state.userFromForm
 );
 
-export const selectErrorAuth = createSelector(
-  selectAuth,
-  (state: TAuthReducer) => state.error
-);
+export const selectErrorAuth = createSelector(selectAuth, (state: TAuthReducer) => state.error);
 
-export const selectAuthUser = createSelector(
-  selectAuth,
-  (state: TAuthReducer) => state.user
-);
+export const selectAuthUser = createSelector(selectAuth, (state: TAuthReducer) => state.user);

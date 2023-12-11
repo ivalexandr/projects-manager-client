@@ -28,13 +28,11 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.authError$
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((error) => {
-        if (error) {
-          this.snackBar.open(error, 'Закрыть', { duration: 5000 });
-          this.store.dispatch(resetError());
-        }
-      });
+    this.authError$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(error => {
+      if (error) {
+        this.snackBar.open(error, 'Закрыть', { duration: 5000 });
+        this.store.dispatch(resetError());
+      }
+    });
   }
 }

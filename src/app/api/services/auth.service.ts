@@ -32,7 +32,10 @@ export class AuthService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  authControllerRegister$Response(params: AuthControllerRegister$Params, context?: HttpContext): Observable<StrictHttpResponse<ResponseUserDto>> {
+  authControllerRegister$Response(
+    params: AuthControllerRegister$Params,
+    context?: HttpContext
+  ): Observable<StrictHttpResponse<ResponseUserDto>> {
     return authControllerRegister(this.http, this.rootUrl, params, context);
   }
 
@@ -42,7 +45,10 @@ export class AuthService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  authControllerRegister(params: AuthControllerRegister$Params, context?: HttpContext): Observable<ResponseUserDto> {
+  authControllerRegister(
+    params: AuthControllerRegister$Params,
+    context?: HttpContext
+  ): Observable<ResponseUserDto> {
     return this.authControllerRegister$Response(params, context).pipe(
       map((r: StrictHttpResponse<ResponseUserDto>): ResponseUserDto => r.body)
     );
@@ -57,7 +63,10 @@ export class AuthService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  authControllerLogin$Response(params: AuthControllerLogin$Params, context?: HttpContext): Observable<StrictHttpResponse<ResponseUserDto>> {
+  authControllerLogin$Response(
+    params: AuthControllerLogin$Params,
+    context?: HttpContext
+  ): Observable<StrictHttpResponse<ResponseUserDto>> {
     return authControllerLogin(this.http, this.rootUrl, params, context);
   }
 
@@ -67,7 +76,10 @@ export class AuthService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  authControllerLogin(params: AuthControllerLogin$Params, context?: HttpContext): Observable<ResponseUserDto> {
+  authControllerLogin(
+    params: AuthControllerLogin$Params,
+    context?: HttpContext
+  ): Observable<ResponseUserDto> {
     return this.authControllerLogin$Response(params, context).pipe(
       map((r: StrictHttpResponse<ResponseUserDto>): ResponseUserDto => r.body)
     );
@@ -82,7 +94,10 @@ export class AuthService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  authControllerRefresh$Response(params: AuthControllerRefresh$Params, context?: HttpContext): Observable<StrictHttpResponse<ResponseUserDto>> {
+  authControllerRefresh$Response(
+    params: AuthControllerRefresh$Params,
+    context?: HttpContext
+  ): Observable<StrictHttpResponse<ResponseUserDto>> {
     return authControllerRefresh(this.http, this.rootUrl, params, context);
   }
 
@@ -92,10 +107,12 @@ export class AuthService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  authControllerRefresh(params: AuthControllerRefresh$Params, context?: HttpContext): Observable<ResponseUserDto> {
+  authControllerRefresh(
+    params: AuthControllerRefresh$Params,
+    context?: HttpContext
+  ): Observable<ResponseUserDto> {
     return this.authControllerRefresh$Response(params, context).pipe(
       map((r: StrictHttpResponse<ResponseUserDto>): ResponseUserDto => r.body)
     );
   }
-
 }
