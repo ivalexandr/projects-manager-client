@@ -1,4 +1,7 @@
 <div class="container">
   <app-top-bar />
-  <ng-content />
+  <app-left-panel (hideSidebar)="hideSideBarHandler()" />
+  <app-center-panel [isHideBar]="isHideSidebar()">
+    <ng-content />
+  </app-center-panel>
 </div>
