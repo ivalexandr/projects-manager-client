@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import * as authActions from './auth.actions';
 import { CreateUserDto, LoginUserDto, ResponseUserDto } from '../../api/models';
+import { totalResetErrors } from '../common/common.actions';
 
 export type TAuthReducer = {
   user: ResponseUserDto | null;
@@ -62,5 +63,6 @@ export const authReducer = createReducer(
     error: null,
     user: null,
     userFromForm: null,
-  }))
+  })),
+  on(totalResetErrors, state => ({ ...state, error: null }))
 );
