@@ -1,0 +1,57 @@
+.create-team-page {
+  padding-top: 20px;
+  position: relative;
+
+  &__banner {
+    position: relative;
+    height: 100px;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  &__title {
+    color: #fff;
+    font-size: 35px;
+    text-align: center;
+    height: 100px;
+    margin-top: 20px;
+  }
+
+  &__container {
+    margin: 0 auto;
+    padding: 20px 30px;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 25px;
+
+    &-field {
+      display: flex;
+      flex-direction: column;
+
+      &--avatar {
+        width: 300px;
+        flex-direction: row-reverse;
+        justify-content: start;
+        align-items: center;
+        gap: 20px;
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+
+    &-banner {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 10;
+    }
+  }
+}

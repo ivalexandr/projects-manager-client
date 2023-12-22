@@ -1,0 +1,44 @@
+@if (authUser$ | async) {
+  <aside class="sidebar" appSidebarAnimation [isHide]="isHideSidebar()">
+    <div class="sidebar-actions">
+      <button
+        mat-fab
+        color="accent"
+        data-action
+        (click)="clickArrowBack()"
+        appButtonRotate
+        [isHide]="isHideSidebar()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+    </div>
+    <h2 class="sidebar-heading mat-subheading-2">{{ componentText.myTeams }}</h2>
+    <div class="sidebar-body">
+      <div class="sidebar-body-list">
+        @if ((userTeams$ | async)?.length === 0) {
+          <div class="sidebar-body-spinner">
+            <mat-spinner />
+          </div>
+        } @else {
+          <mat-list>
+            @for (team of userTeams$ | async; track team.id) {
+              <mat-list-item [lines]="4">
+                <div class="sidebar-body-item">
+                  <app-avatar
+                    matListItemAvatar
+                    [name]="team.name"
+                    [imgSource]="team.avatar || ''" />
+                  <span matListItemTitle class="sidebar-body-item__name">{{ team.name }}</span>
+                </div>
+              </mat-list-item>
+            }
+          </mat-list>
+        }
+      </div>
+      <div class="sidebar-body-actions">
+        <button mat-fab [matTooltip]="componentText.createTeam" [routerLink]="['create-team']">
+          <mat-icon>add_circle</mat-icon>
+        </button>
+      </div>
+    </div>
+  </aside>
+}

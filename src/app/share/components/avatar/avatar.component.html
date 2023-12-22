@@ -1,0 +1,9 @@
+<div class="avatar" *ngIf="!imgSource; else avatarWithImage">
+  {{ name[0] }}
+</div>
+
+<ng-template #avatarWithImage>
+  <div class="avatar-with-image">
+    <img [src]="linkOrBase64" alt="team" />
+  </div>
+</ng-template>

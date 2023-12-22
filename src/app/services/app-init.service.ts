@@ -15,14 +15,11 @@ export class AppInitService {
   ) {}
 
   init(): Promise<unknown> {
-    return new Promise<void>((resolve) => {
-      const localStoragedUser =
-        this.localStorageService.getItem<ResponseUserDto>('authUser');
+    return new Promise<void>(resolve => {
+      const localStoragedUser = this.localStorageService.getItem<ResponseUserDto>('authUser');
 
       if (localStoragedUser) {
-        this.store.dispatch(
-          authActions.loginSuccess({ user: localStoragedUser })
-        );
+        this.store.dispatch(authActions.loginSuccess({ user: localStoragedUser }));
         this.store.dispatch(authActions.refreshToken());
       }
 

@@ -10,18 +10,21 @@ import { LoginUserDto } from '../../models/login-user-dto';
 import { ResponseUserDto } from '../../models/response-user-dto';
 
 export interface AuthControllerLogin$Params {
-      body: LoginUserDto
+  body: LoginUserDto;
 }
 
-export function authControllerLogin(http: HttpClient, rootUrl: string, params: AuthControllerLogin$Params, context?: HttpContext): Observable<StrictHttpResponse<ResponseUserDto>> {
+export function authControllerLogin(
+  http: HttpClient,
+  rootUrl: string,
+  params: AuthControllerLogin$Params,
+  context?: HttpContext
+): Observable<StrictHttpResponse<ResponseUserDto>> {
   const rb = new RequestBuilder(rootUrl, authControllerLogin.PATH, 'post');
   if (params) {
     rb.body(params.body, 'application/json');
   }
 
-  return http.request(
-    rb.build({ responseType: 'json', accept: 'application/json', context })
-  ).pipe(
+  return http.request(rb.build({ responseType: 'json', accept: 'application/json', context })).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
       return r as StrictHttpResponse<ResponseUserDto>;

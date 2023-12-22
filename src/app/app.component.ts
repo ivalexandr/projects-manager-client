@@ -7,7 +7,10 @@ import { selectErrorAuth } from './store/auth/auth.selectors';
 import { TAppStore } from './app.config';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { resetError } from './store/auth/auth.actions';
+import { selectErrorUserTeams } from './store/user-teams/user-teams.selectors';
+import { selectErrorCreateTeam } from './store/create-team/create-team.selectors';
+import { merge } from 'rxjs';
+import { totalResetErrors } from './store/common/common.actions';
 
 @Component({
   selector: 'app-root',
@@ -18,9 +21,11 @@ import { resetError } from './store/auth/auth.actions';
 })
 export class AppComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
-
   title = 'projects-manager-client';
+
   authError$ = this.store.pipe(select(selectErrorAuth));
+  userTeamsError$ = this.store.pipe(select(selectErrorUserTeams));
+  createTeamError$ = this.store.pipe(select(selectErrorCreateTeam));
 
   constructor(
     private readonly store: Store<TAppStore>,
@@ -28,12 +33,12 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.authError$
+    merge(this.authError$, this.userTeamsError$, this.createTeamError$)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((error) => {
+      .subscribe(error => {
         if (error) {
           this.snackBar.open(error, 'Закрыть', { duration: 5000 });
-          this.store.dispatch(resetError());
+          this.store.dispatch(totalResetErrors());
         }
       });
   }
