@@ -1,0 +1,75 @@
+<section [@pageAnimations] class="create-team-page mat-typography">
+  <div class="create-team-page__container">
+    <div class="create-team-page__banner">
+      @if (bannerCreateTeamForm.value) {
+        <img [src]="bannerCreateTeamForm.value" class="form-banner" alt="banner" />
+      }
+    </div>
+
+    <h2 class="create-team-page__title mat-h1">
+      {{ componentText.title }}
+    </h2>
+
+    <form class="form" [formGroup]="createTeamForm" (ngSubmit)="submitForm()">
+      <div class="form-field form-field--avatar">
+        <button type="button" (click)="avatarInput.click()" mat-flat-button color="accent">
+          {{ componentText.teamForm.avatar }}
+        </button>
+        <input
+          #avatarInput
+          (change)="uploadAvatarHandler($event)"
+          type="file"
+          accept="image/*"
+          hidden />
+        <app-avatar [imgSource]="avatarCreateTeamForm.value" />
+      </div>
+
+      <div class="form-field">
+        <button type="button" (click)="bannerInput.click()" mat-flat-button color="accent">
+          {{ componentText.teamForm.banner }}
+        </button>
+        <input
+          #bannerInput
+          (change)="uploadBannerHandler($event)"
+          type="file"
+          accept="image/*"
+          hidden />
+      </div>
+
+      <div class="form-field">
+        <mat-form-field>
+          <mat-label>{{ componentText.teamForm.name }}</mat-label>
+          <input matInput type="text" formControlName="name" />
+          <mat-error *ngIf="nameCreateTeamForm.hasError('required')"
+            >{{ componentText.errors.required }}
+          </mat-error>
+          <mat-error *ngIf="nameCreateTeamForm.hasError('minlength')"
+            >{{ componentText.errors.minTeamName }}
+          </mat-error>
+          <mat-error *ngIf="nameCreateTeamForm.hasError('maxlength')"
+            >{{ componentText.errors.maxTeamName }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field">
+        <mat-form-field>
+          <mat-label>{{ componentText.teamForm.description }}</mat-label>
+          <textarea matInput type="text" formControlName="description"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field">
+        <mat-slide-toggle formControlName="isPublic" color="accent">
+          {{ componentText.teamForm.isPublic }}
+        </mat-slide-toggle>
+      </div>
+
+      <div class="form-field">
+        <button [disabled]="createTeamFormInvalid" mat-flat-button color="primary">
+          {{ componentText.teamForm.create }}
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
