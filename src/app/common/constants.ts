@@ -1,0 +1,1 @@
+export const DURATION_ANIMATION_PANELS = 500;

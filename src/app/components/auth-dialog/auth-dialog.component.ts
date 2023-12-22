@@ -146,8 +146,8 @@ export class AuthDialogComponent {
 
   get hasRegisterPasswordErrors() {
     return (
-      this.passwordRegisterForm.hasError('minLength') ||
-      this.passwordRegisterForm.hasError('maxLength') ||
+      this.passwordRegisterForm.hasError('minlength') ||
+      this.passwordRegisterForm.hasError('maxlength') ||
       this.passwordRegisterForm.hasError('pattern')
     );
   }
