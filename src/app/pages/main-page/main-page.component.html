@@ -1,1 +1,19 @@
-<p>main-page works!</p>
+<div class="main-page" @pageAnimations>
+  <h1 class="main-page__heading">Активные команды</h1>
+  <div class="main-page-cards">
+    <ng-container *ngIf="teamsPaginatedItems$ | async as items">
+      @for (item of items; track item.id) {
+        <app-team-card
+          [name]="item.name"
+          [avatar]="item.avatar"
+          [leader]="item.leader.username"
+          [banner]="item.banner"
+          [description]="item.description"
+          [createdAt]="item.createdAt" />
+      }
+    </ng-container>
+  </div>
+  <div class="main-page-paginator">
+    <mat-paginator hidePageSize (page)="handlePageEvent($event)" [length]="length" [pageSize]="1" />
+  </div>
+</div>

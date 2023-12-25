@@ -1,0 +1,28 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.main-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  padding-right: 20px;
+
+  &__heading {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 0;
+    padding: 5px 0;
+    font-weight: 500;
+  }
+
+  &-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: space-between;
+    grid-auto-rows: 350px;
+    gap: 50px;
+  }
+}
