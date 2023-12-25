@@ -22,5 +22,6 @@ export const userTeamsReducer = createReducer(
   ),
   on(userTeamsActions.getUserTeamsFailure, (state, { error }) => ({ ...state, error })),
   on(userTeamsActions.resetErrorUserTeams, state => ({ ...state, error: null })),
+  on(userTeamsActions.resetUserTeams, state => userTeamsAdapter.removeAll(state)),
   on(totalResetErrors, state => ({ ...state, error: null }))
 );
