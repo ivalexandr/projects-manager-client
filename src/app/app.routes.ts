@@ -6,6 +6,7 @@ export const routes: Routes = [
   {
     path: '',
     component: MainPageComponent,
+    pathMatch: 'full',
   },
   {
     path: 'create-team',

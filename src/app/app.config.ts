@@ -15,17 +15,24 @@ import { TCreateTeamReducer, createTeamReducer } from './store/create-team/creat
 import { CraeteTeamEffects } from './store/create-team/create-team.effects';
 import { IUserTeamsReducer, userTeamsReducer } from './store/user-teams/user-teams.reducer';
 import { UserTeamsEffects } from './store/user-teams/user-teams.effects';
+import {
+  ITeamsPaginatedReducer,
+  teamPaginatedReducer,
+} from './store/teams-paginated/teams-paginated.reducer';
+import { TeamsPaginatedEffects } from './store/teams-paginated/teams-paginated.effects';
 
 export type TAppStore = {
   auth: TAuthReducer;
   createTeam: TCreateTeamReducer;
   userTeams: IUserTeamsReducer;
+  teamsPaginated: ITeamsPaginatedReducer;
 };
 
 const reducers: ActionReducerMap<TAppStore> = {
   auth: authReducer,
   createTeam: createTeamReducer,
   userTeams: userTeamsReducer,
+  teamsPaginated: teamPaginatedReducer,
 };
 
 export const appConfig: ApplicationConfig = {
@@ -35,7 +42,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     graphqlProvider,
     provideStore<TAppStore>(reducers),
-    provideEffects(AuthEffects, CraeteTeamEffects, UserTeamsEffects),
+    provideEffects(AuthEffects, CraeteTeamEffects, UserTeamsEffects, TeamsPaginatedEffects),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     {
       provide: APP_INITIALIZER,
