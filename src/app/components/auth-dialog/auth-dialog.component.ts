@@ -203,7 +203,7 @@ export class AuthDialogComponent {
         password: this.passwordRegisterForm.value,
       };
       this.store.dispatch(authActions.setRegisterData(user));
-      this.store.dispatch(authActions.login());
+      this.store.dispatch(authActions.register());
       this.registerForm.reset();
       this.dialogRef.close();
     }

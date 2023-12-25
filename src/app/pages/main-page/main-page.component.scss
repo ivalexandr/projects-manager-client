@@ -21,8 +21,15 @@
   &-cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    justify-content: space-between;
+    place-content: start space-between;
     grid-auto-rows: 350px;
     gap: 50px;
+  }
+
+  &-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }

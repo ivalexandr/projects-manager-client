@@ -14,7 +14,7 @@
     <h2 class="sidebar-heading mat-subheading-2">{{ componentText.myTeams }}</h2>
     <div class="sidebar-body">
       <div class="sidebar-body-list">
-        @if ((userTeams$ | async)?.length === 0) {
+        @if (userTeamsIsLoading$ | async) {
           <div class="sidebar-body-spinner">
             <mat-spinner />
           </div>
