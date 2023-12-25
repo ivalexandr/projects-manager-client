@@ -10,3 +10,4 @@ export const getUserTeamsFailure = createAction(
 export const addTeam = createAction('[Team]: Add team', props<{ team: ITeam }>());
 export const addTeams = createAction('[Team]: Add teams', props<{ teams: ITeam[] }>());
 export const resetErrorUserTeams = createAction('[Team]: Reset error user teams');
+export const resetUserTeams = createAction('[Team]: Reset user teams');

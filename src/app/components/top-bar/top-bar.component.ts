@@ -9,6 +9,7 @@ import { Store, select } from '@ngrx/store';
 import { TAppStore } from '../../app.config';
 import { selectAuthUser } from '../../store/auth/auth.selectors';
 import * as authActions from '../../store/auth/auth.actions';
+import { resetUserTeams } from '../../store/user-teams/user-teams.actions';
 
 @Component({
   selector: 'app-top-bar',
@@ -48,5 +49,6 @@ export class TopBarComponent {
 
   logoutHandler() {
     this.store.dispatch(authActions.logout());
+    this.store.dispatch(resetUserTeams());
   }
 }

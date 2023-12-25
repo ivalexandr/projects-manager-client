@@ -5,6 +5,8 @@ import { CREATE_TEAM } from '../mutations/create-team';
 import { EMPTY } from 'rxjs';
 import { GET_TEAMS_FOR_USER } from '../queries/get-teams-for-user';
 import { ITeam } from '../models/team';
+import { ITeamActivePaginated } from '../models/teams-active-paginated';
+import { GET_ACTIVE_TEAMS_PAGINATED } from '../queries/get-active-teams-paginated';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +27,13 @@ export class TeamService {
   getTeamsForUsers() {
     return this.apollo.query<{ getTeamForUser: ITeam[] }>({
       query: GET_TEAMS_FOR_USER,
+    });
+  }
+
+  getActiveTeamPaginated(page: number, pageSize: number) {
+    return this.apollo.query<{ getActivePublicTeam: ITeamActivePaginated }>({
+      query: GET_ACTIVE_TEAMS_PAGINATED,
+      variables: { page, pageSize },
     });
   }
 }
