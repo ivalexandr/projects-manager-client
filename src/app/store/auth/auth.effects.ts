@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthService } from '../../api/services';
 import * as authActions from './auth.actions';
-import { catchError, map, of, switchMap, timer, withLatestFrom } from 'rxjs';
+import { catchError, map, of, switchMap, tap, timer, withLatestFrom } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { selectAuthUser, selectUserFromForm } from './auth.selectors';
 import { TAppStore } from '../../app.config';
@@ -49,10 +49,8 @@ export class AuthEffects {
             },
           })
           .pipe(
-            map(user => {
-              this.localStorageService.setItem('authUser', user);
-              return authActions.loginSuccess({ user });
-            }),
+            tap(user => this.localStorageService.setItem('authUser', user)),
+            map(user => authActions.loginSuccess({ user })),
             catchError((error: HttpErrorResponse) => of(authActions.loginFailure(error.error)))
           )
       )

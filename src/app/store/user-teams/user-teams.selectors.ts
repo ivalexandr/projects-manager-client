@@ -9,3 +9,4 @@ export const selectTeamState = (store: TAppStore) => store.userTeams;
 export const selectAllUserTeams = createSelector(selectTeamState, selectAll);
 export const selectTotalUserTeams = createSelector(selectTeamState, selectTotal);
 export const selectErrorUserTeams = createSelector(selectTeamState, state => state.error);
+export const selectIsLoadingTeams = createSelector(selectTeamState, state => state.isLoading);
