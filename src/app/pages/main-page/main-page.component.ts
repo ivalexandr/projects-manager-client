@@ -1,27 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { TAppStore } from '../../app.config';
 import * as teamsPaginatedActions from '../../store/teams-paginated/teams-paginated.actions';
-import { selectActiveTeamsPaginated } from '../../store/teams-paginated/teams-paginated.selectors';
+import {
+  selectActiveTeamsIsLoading,
+  selectActiveTeamsPaginated,
+} from '../../store/teams-paginated/teams-paginated.selectors';
 import { filter, first, map } from 'rxjs';
-import { AsyncPipe, JsonPipe, NgIf } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { pageAnimations } from '../../common/animations';
 import { TeamCardComponent } from '../../components/team-card/team-card.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 @Component({
   selector: 'app-main-page',
   standalone: true,
-  imports: [MatPaginatorModule, JsonPipe, AsyncPipe, TeamCardComponent, NgIf],
+  imports: [MatPaginatorModule, AsyncPipe, TeamCardComponent, MatProgressSpinnerModule, NgIf],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss',
   animations: [pageAnimations],
 })
 export class MainPageComponent implements OnInit {
-  teamsPaginated$ = this.store.select(selectActiveTeamsPaginated);
-  teamsPaginatedItems$ = this.store.select(selectActiveTeamsPaginated).pipe(
+  teamsPaginated$ = this.store.pipe(select(selectActiveTeamsPaginated));
+  teamsPaginatedItems$ = this.store.pipe(select(selectActiveTeamsPaginated)).pipe(
     filter(v => !!v),
     map(teamsPaginated => teamsPaginated!.items)
   );
+  teamsPaginatedIsLoading$ = this.store.pipe(select(selectActiveTeamsIsLoading));
+
   length = 0;
 
   constructor(private readonly store: Store<TAppStore>) {}

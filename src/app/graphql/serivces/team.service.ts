@@ -27,6 +27,7 @@ export class TeamService {
   getTeamsForUsers() {
     return this.apollo.query<{ getTeamForUser: ITeam[] }>({
       query: GET_TEAMS_FOR_USER,
+      fetchPolicy: 'network-only',
     });
   }
 
@@ -34,6 +35,7 @@ export class TeamService {
     return this.apollo.query<{ getActivePublicTeam: ITeamActivePaginated }>({
       query: GET_ACTIVE_TEAMS_PAGINATED,
       variables: { page, pageSize },
+      fetchPolicy: 'network-only',
     });
   }
 }

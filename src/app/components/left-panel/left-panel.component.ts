@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, OnInit, Output, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -12,8 +12,12 @@ import { selectAuthUser } from '../../store/auth/auth.selectors';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { getUserTeams } from '../../store/user-teams/user-teams.actions';
-import { selectAllUserTeams } from '../../store/user-teams/user-teams.selectors';
+import {
+  selectAllUserTeams,
+  selectIsLoadingTeams,
+} from '../../store/user-teams/user-teams.selectors';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-left-panel',
@@ -34,11 +38,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   styleUrl: './left-panel.component.scss',
 })
 export class LeftPanelComponent implements OnInit {
+  destroyRef$ = inject(DestroyRef);
   isHideSidebar = signal(false);
   @Output() hideSidebar = new EventEmitter(false);
 
   authUser$ = this.store.pipe(select(selectAuthUser));
   userTeams$ = this.store.pipe(select(selectAllUserTeams));
+  userTeamsIsLoading$ = this.store.pipe(select(selectIsLoadingTeams));
 
   componentText = {
     createTeam: 'Создать команду',
@@ -48,8 +54,9 @@ export class LeftPanelComponent implements OnInit {
   constructor(private readonly store: Store<TAppStore>) {}
 
   ngOnInit(): void {
-    this.authUser$.subscribe(user => {
+    this.authUser$.pipe(takeUntilDestroyed(this.destroyRef$)).subscribe(user => {
       if (user) {
+        console.log(user);
         this.store.dispatch(getUserTeams());
       }
     });

@@ -8,3 +8,7 @@ export const selectActiveTeamsPaginated = createSelector(
   selectTeamsPaginated,
   state => state.teamsPaginated
 );
+export const selectActiveTeamsIsLoading = createSelector(
+  selectTeamsPaginated,
+  state => state.isLoading
+);
