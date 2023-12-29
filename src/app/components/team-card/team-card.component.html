@@ -1,19 +1,19 @@
-<mat-card class="team-card">
+<mat-card class="team-card" *ngIf="team">
   <mat-card-header>
-    <div mat-card-avatar><app-avatar [imgSource]="avatar" /></div>
-    <mat-card-title>{{ name }}</mat-card-title>
-    <mat-card-subtitle>{{ leader }}</mat-card-subtitle>
+    <div mat-card-avatar><app-avatar [imgSource]="team.avatar" /></div>
+    <mat-card-title>{{ team.name }}</mat-card-title>
+    <mat-card-subtitle>{{ team.leader.username }}</mat-card-subtitle>
   </mat-card-header>
   <div class="team-card__banner">
-    @if (banner) {
-      <img [src]="bannerUrl" alt="banner" />
+    @if (team.banner) {
+      <img [src]="bannerUrl" alt="banner" data-test="banner-img" />
     } @else {
       <p class="team-card__nobanner">{{ componentText.noBanner }}</p>
     }
   </div>
   <mat-card-content class="team-card__content">
-    <p>{{ description }}</p>
+    <p>{{ team.description }}</p>
     <p>{{ componentText.createdAt }}</p>
-    <time [dateTime]="createdAt"> {{ createdAt | date: 'dd.MM.yyyy' }} </time>
+    <time [dateTime]="team.createdAt"> {{ team.createdAt | date: 'dd.MM.yyyy' }} </time>
   </mat-card-content>
 </mat-card>

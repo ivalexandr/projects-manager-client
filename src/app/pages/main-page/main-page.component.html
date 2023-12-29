@@ -8,13 +8,7 @@
     <div class="main-page-cards">
       <ng-container *ngIf="teamsPaginatedItems$ | async as items">
         @for (item of items; track item.id) {
-          <app-team-card
-            [name]="item.name"
-            [avatar]="item.avatar"
-            [leader]="item.leader.username"
-            [banner]="item.banner"
-            [description]="item.description"
-            [createdAt]="item.createdAt" />
+          <app-team-card [team]="item" />
         }
       </ng-container>
     </div>
