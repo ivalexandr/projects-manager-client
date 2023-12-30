@@ -56,7 +56,6 @@ export class LeftPanelComponent implements OnInit {
   ngOnInit(): void {
     this.authUser$.pipe(takeUntilDestroyed(this.destroyRef$)).subscribe(user => {
       if (user) {
-        console.log(user);
         this.store.dispatch(getUserTeams());
       }
     });
