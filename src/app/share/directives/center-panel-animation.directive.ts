@@ -11,7 +11,7 @@ import {
   inject,
 } from '@angular/core';
 import { DURATION_ANIMATION_PANELS } from '../../common/constants';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { TAppStore } from '../../app.config';
 import { selectAuthUser } from '../../store/auth/auth.selectors';
 import { map } from 'rxjs';
@@ -28,7 +28,10 @@ export class CenterPanelAnimationDirective implements OnChanges, OnDestroy, OnIn
   targetShowAnimateLeft!: number;
   centerPanelEl = this.el.nativeElement as HTMLElement;
 
-  authUser$ = this.store.select(selectAuthUser).pipe(map(u => u));
+  authUser$ = this.store.pipe(
+    select(selectAuthUser),
+    map(u => u)
+  );
   private destroyRef = inject(DestroyRef);
 
   constructor(
