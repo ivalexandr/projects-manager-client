@@ -17,7 +17,6 @@ import { totalResetErrors } from './store/common/common.actions';
   standalone: true,
   imports: [CommonModule, RouterOutlet, MainLayoutComponent],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
