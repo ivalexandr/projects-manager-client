@@ -20,6 +20,10 @@ import {
   teamPaginatedReducer,
 } from './store/teams-paginated/teams-paginated.reducer';
 import { TeamsPaginatedEffects } from './store/teams-paginated/teams-paginated.effects';
+import { registerLocaleData } from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
+
+registerLocaleData(localeRu);
 
 export type TAppStore = {
   auth: TAuthReducer;
