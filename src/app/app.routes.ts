@@ -16,4 +16,10 @@ export const routes: Routes = [
       ),
     canActivate: [createTeamGuard],
   },
+  {
+    path: 'user-team/:id',
+    loadComponent: () =>
+      import('./pages/user-team/user-team.component').then(m => m.UserTeamComponent),
+    canActivate: [createTeamGuard],
+  },
 ];
