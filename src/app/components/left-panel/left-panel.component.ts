@@ -10,7 +10,7 @@ import { Store, select } from '@ngrx/store';
 import { TAppStore } from '../../app.config';
 import { selectAuthUser } from '../../store/auth/auth.selectors';
 import { AsyncPipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { getUserTeams } from '../../store/user-teams/user-teams.actions';
 import {
   selectAllUserTeams,
@@ -33,6 +33,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     AsyncPipe,
     RouterLink,
     MatProgressSpinnerModule,
+    RouterLinkActive,
   ],
   templateUrl: './left-panel.component.html',
   styleUrl: './left-panel.component.scss',

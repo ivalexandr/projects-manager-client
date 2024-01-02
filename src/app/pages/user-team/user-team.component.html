@@ -1,0 +1,44 @@
+<div #pageContainer class="user-team" @pageAnimations>
+  @if (activeTeamIsLoading$ | async) {
+    <div class="user-team-loader">
+      <mat-spinner />
+    </div>
+  } @else {
+    <ng-container *ngIf="activeTeam$ | async as team">
+      <div class="user-team-banner">
+        @if (team.banner) {
+          <img [src]="uploadLink + team.banner" alt="team-banner" />
+        }
+      </div>
+      <div class="user-team-avatar">
+        <app-avatar [name]="team.name" [imgSource]="team.avatar" />
+        <h1 class="user-team-avatar__name">{{ team.name }}</h1>
+      </div>
+      <div class="user-team-leader">
+        <span class="user-team-leader__subtitle">{{ componentText.leader }}</span>
+        <h2 class="user-team-leader__heading">
+          {{ team.leader.username }}
+        </h2>
+      </div>
+      <div class="user-team-chat">
+        <button mat-flat-button color="accent">
+          {{ componentText.chat }}
+        </button>
+      </div>
+      <div class="user-team-tabs">
+        <mat-tab-group color="accent">
+          <mat-tab [label]="componentText.tabs.projects">
+            <app-projects-list [projects]="team.projects" />
+          </mat-tab>
+          <mat-tab [label]="componentText.tabs.members"> Здесь будет список участников... </mat-tab>
+          <mat-tab [label]="componentText.tabs.statistics">
+            Здесь будет статистика команды...
+          </mat-tab>
+          <mat-tab [label]="componentText.tabs.edit">
+            Здесь будет форма для редактирования команды
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </ng-container>
+  }
+</div>

@@ -22,7 +22,11 @@
         } @else {
           <mat-list>
             @for (team of userTeams$ | async; track team.id) {
-              <mat-list-item [lines]="4">
+              <mat-list-item
+                [lines]="4"
+                [routerLink]="['user-team', team.id]"
+                [routerLinkActive]="'active-team'"
+                class="sidebar-mat-list-item">
                 <div class="sidebar-body-item">
                   <app-avatar
                     matListItemAvatar

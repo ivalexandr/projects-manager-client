@@ -1,0 +1,20 @@
+<div class="projects-list">
+  <div class="projects-list-create">
+    <button mat-flat-button color="primary">{{ componentText.create }}</button>
+  </div>
+  <div class="projects-list-self">
+    <mat-list class="projects-list-self__list">
+      @for (project of projects; track project.id) {
+        <mat-list-item [title]="project.title" [lines]="4" class="projects-list-self__item">
+          <mat-icon matListItemAvatar>task</mat-icon>
+          <h3 matListItemTitle>{{ project.title }}</h3>
+          <div matListItemMeta>{{ project.description }}</div>
+          <div matListItemMeta class="projects-list-self__createdAt">
+            <div>{{ componentText.createdAt }}</div>
+            <time [dateTime]="project.createdAt">{{ project.createdAt | date: 'dd.MM.yyyy' }}</time>
+          </div>
+        </mat-list-item>
+      }
+    </mat-list>
+  </div>
+</div>

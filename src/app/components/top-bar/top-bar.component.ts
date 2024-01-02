@@ -10,6 +10,7 @@ import { TAppStore } from '../../app.config';
 import { selectAuthUser } from '../../store/auth/auth.selectors';
 import * as authActions from '../../store/auth/auth.actions';
 import { resetUserTeams } from '../../store/user-teams/user-teams.actions';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-top-bar',
@@ -21,6 +22,7 @@ import { resetUserTeams } from '../../store/user-teams/user-teams.actions';
     AsyncPipe,
     MatMenuModule,
     MatIconModule,
+    RouterLink,
   ],
   templateUrl: './top-bar.component.html',
   styleUrl: './top-bar.component.scss',
