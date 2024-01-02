@@ -13,12 +13,22 @@ import { ResponseUserDto } from '../../api/models';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import * as authActions from '../../store/auth/auth.actions';
 import { resetUserTeams } from '../../store/user-teams/user-teams.actions';
+import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 class MockAuthDialogService {
   openDialog = jasmine.createSpy('openDialog');
 }
 
 const mockStore = jasmine.createSpyObj('Store', ['dispatch', 'select', 'pipe']);
+const activatedRouteStub = {
+  snapshot: {
+    paramMap: {
+      get: () => 'some-value',
+    },
+  },
+  queryParams: of({ someQuery: 'someValue' }),
+};
 
 describe('TopBarComponent', () => {
   let component: TopBarComponent;
@@ -38,8 +48,10 @@ describe('TopBarComponent', () => {
         MatIconModule,
         StoreModule.forRoot({}),
         NoopAnimationsModule,
+        RouterTestingModule,
       ],
       providers: [
+        { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: AuthDialogService, useClass: MockAuthDialogService },
         { provide: Store, useValue: mockStore },
         { provide: OverlayContainer, useClass: OverlayContainer },

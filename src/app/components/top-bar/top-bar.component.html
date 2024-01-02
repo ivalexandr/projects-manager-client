@@ -1,5 +1,5 @@
 <mat-toolbar>
-  <h2>{{ componentText.title | uppercase }}</h2>
+  <h2 class="toolbar-title" [routerLink]="['']">{{ componentText.title | uppercase }}</h2>
   <span class="toolbar-spacer"></span>
   @if (authUser$ | async) {
     <div [mat-menu-trigger-for]="menu" class="toolbar-user-avatar" data-test="user-avatar"></div>
