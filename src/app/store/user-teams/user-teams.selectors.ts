@@ -10,3 +10,9 @@ export const selectAllUserTeams = createSelector(selectTeamState, selectAll);
 export const selectTotalUserTeams = createSelector(selectTeamState, selectTotal);
 export const selectErrorUserTeams = createSelector(selectTeamState, state => state.error);
 export const selectIsLoadingTeams = createSelector(selectTeamState, state => state.isLoading);
+
+export const selectActiveTeam = createSelector(selectTeamState, state => state.activeUserTeam);
+export const selectIsActiveTeamLoading = createSelector(
+  selectTeamState,
+  state => state.isActiveTeamLoading
+);
