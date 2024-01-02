@@ -21,6 +21,14 @@
     transition: opacity 0.2s ease-in-out;
   }
 
+  &-mat-list-item {
+    padding-bottom: 5px;
+
+    &::before {
+      display: none;
+    }
+  }
+
   &-body {
     &-list {
       max-height: 75vh;
@@ -74,5 +82,31 @@
         }
       }
     }
+  }
+}
+
+.active-team {
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    animation-name: active-team-animate;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+    bottom: 0;
+    height: 2px;
+    background-color: #424242;
+  }
+}
+
+@keyframes active-team-animate {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 90%;
   }
 }
