@@ -22,6 +22,11 @@ import {
 import { TeamsPaginatedEffects } from './store/teams-paginated/teams-paginated.effects';
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
+import {
+  IProjectsInTeamReducer,
+  projectsInTeamReducer,
+} from './store/projects-in-team/projects-in-team.reducer';
+import { ProjectsInTeamEffects } from './store/projects-in-team/projects-in-team.effects';
 
 registerLocaleData(localeRu);
 
@@ -30,6 +35,7 @@ export type TAppStore = {
   createTeam: TCreateTeamReducer;
   userTeams: IUserTeamsReducer;
   teamsPaginated: ITeamsPaginatedReducer;
+  projectsInTeam: IProjectsInTeamReducer;
 };
 
 const reducers: ActionReducerMap<TAppStore> = {
@@ -37,7 +43,16 @@ const reducers: ActionReducerMap<TAppStore> = {
   createTeam: createTeamReducer,
   userTeams: userTeamsReducer,
   teamsPaginated: teamPaginatedReducer,
+  projectsInTeam: projectsInTeamReducer,
 };
+
+const effects = [
+  AuthEffects,
+  CraeteTeamEffects,
+  UserTeamsEffects,
+  TeamsPaginatedEffects,
+  ProjectsInTeamEffects,
+];
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -46,7 +61,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     graphqlProvider,
     provideStore<TAppStore>(reducers),
-    provideEffects(AuthEffects, CraeteTeamEffects, UserTeamsEffects, TeamsPaginatedEffects),
+    provideEffects(effects),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     {
       provide: APP_INITIALIZER,

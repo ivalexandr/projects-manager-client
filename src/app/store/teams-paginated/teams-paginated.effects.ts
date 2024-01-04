@@ -5,7 +5,7 @@ import { TAppStore } from '../../app.config';
 import * as teamsPaginatedActions from './teams-paginated.actions';
 import { catchError, map, of, switchMap, withLatestFrom } from 'rxjs';
 import { selectPageAndPageSize } from './teams-paginated.selectors';
-import { TeamService } from '../../graphql/serivces/team.service';
+import { TeamService } from '../../graphql/services/team.service';
 
 @Injectable()
 export class TeamsPaginatedEffects {

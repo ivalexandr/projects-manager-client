@@ -11,6 +11,7 @@ import { selectErrorUserTeams } from './store/user-teams/user-teams.selectors';
 import { selectErrorCreateTeam } from './store/create-team/create-team.selectors';
 import { merge } from 'rxjs';
 import { totalResetErrors } from './store/common/common.actions';
+import { selectProjectsInTeamError } from './store/projects-in-team/projects-in-team.selectors';
 
 @Component({
   selector: 'app-root',
@@ -25,6 +26,7 @@ export class AppComponent implements OnInit {
   authError$ = this.store.pipe(select(selectErrorAuth));
   userTeamsError$ = this.store.pipe(select(selectErrorUserTeams));
   createTeamError$ = this.store.pipe(select(selectErrorCreateTeam));
+  projectsInTeamError$ = this.store.pipe(select(selectProjectsInTeamError));
 
   constructor(
     private readonly store: Store<TAppStore>,
@@ -32,7 +34,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    merge(this.authError$, this.userTeamsError$, this.createTeamError$)
+    merge(this.authError$, this.userTeamsError$, this.createTeamError$, this.projectsInTeamError$)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(error => {
         if (error) {

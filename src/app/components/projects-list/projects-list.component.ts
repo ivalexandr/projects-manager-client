@@ -1,21 +1,38 @@
-import { Component, Input } from '@angular/core';
-import { IProjectInTeam } from '../../graphql/models/project-in-team';
+import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
-import { DatePipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { Store, select } from '@ngrx/store';
+import { TAppStore } from '../../app.config';
+import {
+  selectAllProjectsInTeam,
+  selectProjectsInTeamIsLoading,
+} from '../../store/projects-in-team/projects-in-team.selectors';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-projects-list',
   standalone: true,
-  imports: [MatButtonModule, MatListModule, MatIconModule, DatePipe],
+  imports: [
+    MatButtonModule,
+    MatListModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    DatePipe,
+    AsyncPipe,
+  ],
   templateUrl: './projects-list.component.html',
   styleUrl: './projects-list.component.scss',
 })
 export class ProjectsListComponent {
-  @Input() projects!: IProjectInTeam[];
+  projectsIsLoading$ = this.store.pipe(select(selectProjectsInTeamIsLoading));
+  projects$ = this.store.pipe(select(selectAllProjectsInTeam));
+
   componentText = {
     create: 'Создать проект',
     createdAt: 'Дата создания',
   };
+
+  constructor(private readonly store: Store<TAppStore>) {}
 }

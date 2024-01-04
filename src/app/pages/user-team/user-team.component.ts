@@ -9,10 +9,11 @@ import {
   inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { TAppStore } from '../../app.config';
 import * as userTeamsActions from '../../store/user-teams/user-teams.actions';
+import * as projectsInTeamsActions from '../../store/projects-in-team/projects-in-team.actions';
 import {
   selectActiveTeam,
   selectIsActiveTeamLoading,
@@ -26,6 +27,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ProjectsListComponent } from '../../components/projects-list/projects-list.component';
 import { pageAnimations } from '../../common/animations';
 import { AnimationBuilder, animate, style } from '@angular/animations';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-user-team',
@@ -64,7 +66,8 @@ export class UserTeamComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private readonly activatedRouter: ActivatedRoute,
     private readonly store: Store<TAppStore>,
-    private readonly animationBuilder: AnimationBuilder
+    private readonly animationBuilder: AnimationBuilder,
+    private readonly router: Router
   ) {}
 
   get uploadLink() {
@@ -75,7 +78,16 @@ export class UserTeamComponent implements OnInit, OnDestroy, AfterViewInit {
     this.activatedRouter.params.pipe(takeUntilDestroyed(this.destroyRef$)).subscribe(params => {
       const id = params['id'] as string;
       this.store.dispatch(userTeamsActions.getUserTeam({ teamId: id }));
+      this.store.dispatch(projectsInTeamsActions.getProjectsInTeam({ teamId: id }));
     });
+    this.router.events
+      .pipe(
+        filter(e => e instanceof NavigationStart),
+        takeUntilDestroyed(this.destroyRef$)
+      )
+      .subscribe(() => {
+        this.store.dispatch(projectsInTeamsActions.resetProjectsInTeams());
+      });
   }
 
   ngAfterViewInit(): void {

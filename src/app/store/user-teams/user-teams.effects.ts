@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { TeamService } from '../../graphql/serivces/team.service';
+import { TeamService } from '../../graphql/services/team.service';
 import * as userTeamsActions from './user-teams.actions';
 import { catchError, map, of, switchMap } from 'rxjs';
 
