@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TeamService } from '../../graphql/serivces/team.service';
+import { TeamService } from '../../graphql/services/team.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { TAppStore } from '../../app.config';
