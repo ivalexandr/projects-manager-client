@@ -8,12 +8,6 @@ export const GET_USER_TEAM = gql`
       avatar
       name
       description
-      projects {
-        id
-        title
-        description
-        createdAt
-      }
       leader {
         username
       }
