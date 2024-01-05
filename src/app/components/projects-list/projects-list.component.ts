@@ -10,6 +10,7 @@ import {
   selectProjectsInTeamIsLoading,
 } from '../../store/projects-in-team/projects-in-team.selectors';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CreateProjectDialogService } from '../create-project-dialog/create-project-dialog.service';
 
 @Component({
   selector: 'app-projects-list',
@@ -34,5 +35,12 @@ export class ProjectsListComponent {
     createdAt: 'Дата создания',
   };
 
-  constructor(private readonly store: Store<TAppStore>) {}
+  constructor(
+    private readonly store: Store<TAppStore>,
+    private readonly createProjectDialogService: CreateProjectDialogService
+  ) {}
+
+  createProjectHandler() {
+    this.createProjectDialogService.openDialog();
+  }
 }

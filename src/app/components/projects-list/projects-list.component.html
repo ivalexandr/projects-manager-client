@@ -1,6 +1,8 @@
 <div class="projects-list">
   <div class="projects-list-create">
-    <button mat-flat-button color="primary">{{ componentText.create }}</button>
+    <button mat-flat-button color="primary" (click)="createProjectHandler()">
+      {{ componentText.create }}
+    </button>
   </div>
   <div class="projects-list-self">
     @if (projectsIsLoading$ | async) {
