@@ -28,6 +28,10 @@ export const projectsInTeamReducer = createReducer(
     isLoading: false,
     error,
   })),
+  on(projectsInTeamActions.createProjectInTeamSuccess, (state, { project }) =>
+    projectsInTeamAdapter.addOne(project, state)
+  ),
+  on(projectsInTeamActions.createProjectInTeamFailure, (state, { error }) => ({ ...state, error })),
   on(projectsInTeamActions.resetProjectsInTeams, state => projectsInTeamAdapter.removeAll(state)),
   on(totalResetErrors, state => ({ ...state, error: null }))
 );

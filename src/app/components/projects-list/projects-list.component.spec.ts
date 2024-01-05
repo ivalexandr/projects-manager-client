@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { IProjectInTeam } from '../../graphql/models/project-in-team';
+import { CreateProjectDialogService } from '../create-project-dialog/create-project-dialog.service';
 
 const mockStore = jasmine.createSpyObj('Store', ['dispatch', 'select', 'pipe']);
 
@@ -24,7 +25,7 @@ describe('ProjectsListComponent', () => {
         MatIconModule,
         MatProgressSpinnerModule,
       ],
-      providers: [{ provide: Store, useValue: mockStore }],
+      providers: [CreateProjectDialogService, { provide: Store, useValue: mockStore }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProjectsListComponent);
