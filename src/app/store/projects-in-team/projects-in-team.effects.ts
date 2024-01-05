@@ -7,13 +7,13 @@ import { catchError, map, of, switchMap } from 'rxjs';
 @Injectable()
 export class ProjectsInTeamEffects {
   getProjectsInTeam$ = createEffect(() =>
-    this.actions.pipe(
+    this.actions$.pipe(
       ofType(projectsInTeamActions.getProjectsInTeam),
       switchMap(action =>
         this.projectService.getProjectsInTeam(action.teamId).pipe(
-          map(data =>
+          map(({ data }) =>
             projectsInTeamActions.getProjectsInTeamSuccess({
-              projects: data.data.getProjectsForTeam,
+              projects: data.getProjectsForTeam,
             })
           ),
           catchError(err =>
@@ -24,8 +24,24 @@ export class ProjectsInTeamEffects {
     )
   );
 
+  createProjectInTeam$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(projectsInTeamActions.createProjectInTeam),
+      switchMap(action =>
+        this.projectService.createProjectInTeam(action.input).pipe(
+          map(({ data }) =>
+            projectsInTeamActions.createProjectInTeamSuccess({ project: data!.createProject })
+          ),
+          catchError(err =>
+            of(projectsInTeamActions.createProjectInTeamFailure({ error: err.message }))
+          )
+        )
+      )
+    )
+  );
+
   constructor(
-    private readonly actions: Actions,
+    private readonly actions$: Actions,
     private readonly projectService: ProjectService
   ) {}
 }
