@@ -8,6 +8,7 @@ import { selectAuthUser, selectUserFromForm } from './auth.selectors';
 import { TAppStore } from '../../app.config';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthEffects {
@@ -94,6 +95,7 @@ export class AuthEffects {
   logout$ = createEffect(() =>
     this.actions$.pipe(
       ofType(authActions.logout),
+      tap(() => this.router.navigate(['/'])),
       map(() => {
         this.localStorageService.removeItem('authUser');
         return authActions.logoutClean();
@@ -105,6 +107,7 @@ export class AuthEffects {
     private readonly actions$: Actions,
     private readonly authService: AuthService,
     private readonly store: Store<TAppStore>,
-    private readonly localStorageService: LocalStorageService
+    private readonly localStorageService: LocalStorageService,
+    private readonly router: Router
   ) {}
 }
