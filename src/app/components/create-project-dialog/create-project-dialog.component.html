@@ -1,1 +1,40 @@
-<p>create-project-dialog works!</p>
+<h3 mat-dialog-title>{{ componentText.title }}</h3>
+<div class="create-project-dialog-form" mat-dialog-content>
+  <form
+    class="create-project-dialog-form__item"
+    [formGroup]="createProjectForm"
+    (ngSubmit)="submitHandler()">
+    <mat-form-field>
+      <mat-label>{{ componentText.form.name }}</mat-label>
+      <input matInput formControlName="title" />
+      <mat-icon matIconPrefix>title</mat-icon>
+      <mat-error *ngIf="title.hasError('required')">
+        {{ componentText.errors.required }}
+      </mat-error>
+      <mat-error *ngIf="title.hasError('minlength') || title.hasError('maxlength')">
+        {{ componentText.errors.nameLength }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ componentText.form.description }}</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+      <mat-icon matIconPrefix>description</mat-icon>
+      <mat-error *ngIf="description.hasError('required')">
+        {{ componentText.errors.required }}
+      </mat-error>
+      <mat-error *ngIf="description.hasError('minlength') || description.hasError('maxlength')">
+        {{ componentText.errors.descriptionLength }}
+      </mat-error>
+      <mat-hint align="end"
+        >{{ description.value.length }} / {{ componentText.form.descriptionMaxSymbols }}</mat-hint
+      >
+    </mat-form-field>
+
+    <div class="create-project-dialog-form__actions" mat-dialog-actions>
+      <button mat-flat-button color="accent" [disabled]="formInvalid">
+        {{ componentText.form.create }}
+      </button>
+    </div>
+  </form>
+</div>

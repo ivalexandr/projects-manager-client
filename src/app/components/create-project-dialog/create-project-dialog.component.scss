@@ -1,3 +1,9 @@
 .create-project-dialog {
-  padding-top: 10px;
+  &-form {
+    &__item {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
 }
