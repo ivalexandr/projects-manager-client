@@ -47,7 +47,6 @@ export const userTeamsReducer = createReducer(
     isActiveTeamLoading: false,
     error,
   })),
-  on(userTeamsActions.resetUserTeam, state => ({ ...state, activeUserTeam: null })),
   on(userTeamsActions.resetUserTeams, state => userTeamsAdapter.removeAll(state)),
   on(totalResetErrors, state => ({ ...state, error: null }))
 );
