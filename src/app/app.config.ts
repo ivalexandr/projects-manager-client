@@ -1,5 +1,5 @@
 import { APP_INITIALIZER, ApplicationConfig, isDevMode } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withHashLocation } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -20,13 +20,18 @@ import {
   teamPaginatedReducer,
 } from './store/teams-paginated/teams-paginated.reducer';
 import { TeamsPaginatedEffects } from './store/teams-paginated/teams-paginated.effects';
-import { registerLocaleData } from '@angular/common';
+import { IMAGE_CONFIG, registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 import {
   IProjectsInTeamReducer,
   projectsInTeamReducer,
 } from './store/projects-in-team/projects-in-team.reducer';
 import { ProjectsInTeamEffects } from './store/projects-in-team/projects-in-team.effects';
+import {
+  ITeamChatMessagesReducer,
+  teamChatMessagesReducer,
+} from './store/team-chat-mesasges/team-chat-messages.reducer';
+import { TeamChatMessagesEffects } from './store/team-chat-mesasges/team-chat-messages.effects';
 
 registerLocaleData(localeRu);
 
@@ -36,6 +41,7 @@ export type TAppStore = {
   userTeams: IUserTeamsReducer;
   teamsPaginated: ITeamsPaginatedReducer;
   projectsInTeam: IProjectsInTeamReducer;
+  teamChatMessages: ITeamChatMessagesReducer;
 };
 
 const reducers: ActionReducerMap<TAppStore> = {
@@ -44,6 +50,7 @@ const reducers: ActionReducerMap<TAppStore> = {
   userTeams: userTeamsReducer,
   teamsPaginated: teamPaginatedReducer,
   projectsInTeam: projectsInTeamReducer,
+  teamChatMessages: teamChatMessagesReducer,
 };
 
 const effects = [
@@ -52,11 +59,12 @@ const effects = [
   UserTeamsEffects,
   TeamsPaginatedEffects,
   ProjectsInTeamEffects,
+  TeamChatMessagesEffects,
 ];
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),
+    provideRouter(routes, withHashLocation()),
     provideAnimations(),
     provideHttpClient(),
     graphqlProvider,
@@ -68,6 +76,13 @@ export const appConfig: ApplicationConfig = {
       useFactory: (appInitService: AppInitService) => () => appInitService.init(),
       deps: [AppInitService],
       multi: true,
+    },
+    {
+      provide: IMAGE_CONFIG,
+      useValue: {
+        disableImageSizeWarning: true,
+        disableImageLazyLoadWarning: true,
+      },
     },
   ],
 };

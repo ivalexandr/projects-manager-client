@@ -22,4 +22,10 @@ export const routes: Routes = [
       import('./pages/user-team/user-team.component').then(m => m.UserTeamComponent),
     canActivate: [authGuard],
   },
+  {
+    path: 'team-chat/:id',
+    loadComponent: () =>
+      import('./pages/team-chat/team-chat.component').then(m => m.TeamChatComponent),
+    canActivate: [authGuard],
+  },
 ];
