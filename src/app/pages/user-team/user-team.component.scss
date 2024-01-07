@@ -27,6 +27,10 @@
     }
   }
 
+  &-content {
+    background-color: red;
+  }
+
   &-avatar {
     position: relative;
     display: flex;
@@ -35,11 +39,15 @@
 
     &__name {
       margin-bottom: 0;
+      font-weight: 600;
     }
   }
 
   &-leader {
+    margin-top: 5px;
     position: relative;
+    background-color: #00000070;
+    color: #fff;
   }
 
   &-tabs {

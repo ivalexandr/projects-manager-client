@@ -3,13 +3,12 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  OnDestroy,
   OnInit,
   ViewChild,
   inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router, RouterLink } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { TAppStore } from '../../app.config';
 import * as userTeamsActions from '../../store/user-teams/user-teams.actions';
@@ -40,12 +39,13 @@ import { filter } from 'rxjs';
     ProjectsListComponent,
     AsyncPipe,
     NgIf,
+    RouterLink,
   ],
   templateUrl: './user-team.component.html',
   styleUrl: './user-team.component.scss',
   animations: [pageAnimations],
 })
-export class UserTeamComponent implements OnInit, OnDestroy, AfterViewInit {
+export class UserTeamComponent implements OnInit, AfterViewInit {
   @ViewChild('pageContainer') pageContainer!: ElementRef;
 
   destroyRef$ = inject(DestroyRef);
@@ -104,9 +104,5 @@ export class UserTeamComponent implements OnInit, OnDestroy, AfterViewInit {
 
     const player = factory.create(this.pageContainer?.nativeElement);
     player.play();
-  }
-
-  ngOnDestroy(): void {
-    this.store.dispatch(userTeamsActions.resetUserTeam());
   }
 }
