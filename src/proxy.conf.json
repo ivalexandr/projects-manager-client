@@ -10,5 +10,11 @@
   "/uploads/": {
     "target": "http://localhost:3000",
     "secure": false
+  },
+  "/team-chat": {
+    "target": "ws://localhost:3000",
+    "ws": true,
+    "secure": false,
+    "changeOrigin": true
   }
 }
