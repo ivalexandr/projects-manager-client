@@ -1,0 +1,43 @@
+<div class="team-chat" @pageAnimations>
+  <div class="team-chat-container">
+    <div class="team-chat-left">
+      <button mat-fab extended color="primary" (click)="backButtonHandler()">
+        <mat-icon>arrow_back</mat-icon>
+        {{ componentsText.back }}
+      </button>
+    </div>
+    <div class="team-chat-right">
+      <div class="team-chat-messages-container">
+        @if (isLoading$ | async) {
+          <div class="team-chat-spinner">
+            <mat-spinner color="accent" />
+          </div>
+        } @else {
+          @for (message of teamChatMessages$ | async; track message.id) {
+            <div class="team-chat-message">
+              <div class="team-chat-message__item">
+                {{ message.message }}
+              </div>
+              <div class="team-chat-message__sender">
+                <span>{{ message.sender.username }}</span>
+                <time>{{ message.createdAt | date: 'HH:mm:ss/dd MMMM yyyy' }}</time>
+              </div>
+            </div>
+          }
+          @if (!(teamChatMessages$ | async)?.length) {
+            <div class="team-chat-no-message">
+              {{ componentsText.noMessage }}
+            </div>
+          }
+        }
+      </div>
+      <form class="team-chat-form" (ngSubmit)="submitHandler()" [formGroup]="chatForm">
+        <mat-form-field>
+          <mat-label>{{ componentsText.form.message }}</mat-label>
+          <textarea matInput formControlName="content"></textarea>
+        </mat-form-field>
+        <button mat-flat-button type="submit" color="accent">{{ componentsText.form.send }}</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -21,4 +21,3 @@ export const getUserTeamFailure = createAction(
   '[Team]: Get user team failure',
   props<{ error: string }>()
 );
-export const resetUserTeam = createAction('[Team]: Reset user team');

@@ -21,7 +21,7 @@
         </h2>
       </div>
       <div class="user-team-chat">
-        <button mat-flat-button color="accent">
+        <button mat-flat-button color="accent" [routerLink]="['/team-chat', team.teamChat.id]">
           {{ componentText.chat }}
         </button>
       </div>
