@@ -10,7 +10,6 @@ export interface ITeam {
   avatar: string;
   banner: string;
   leader: IUser;
-  members: IUser[];
   status: TeamStatus;
   projects: IProjectInTeam[];
   isPublic: boolean;

@@ -1,4 +1,4 @@
-import { ITeam } from './team';
+import { ITeamAccess } from './team-access';
 
 export interface IUser {
   id: string;
@@ -6,5 +6,5 @@ export interface IUser {
   username: string;
   email: string;
   createdAt: Date;
-  teams: ITeam[];
+  teamAccesses: ITeamAccess[];
 }

@@ -1,8 +1,8 @@
 import { gql } from 'apollo-angular';
 
-export const CREATE_TEAM = gql`
-  mutation createTeamMutation($input: CreateTeamInput!) {
-    createTeam(create: $input) {
+export const GET_TEAM_ACCESSES = gql`
+  query {
+    getTeamAccesses {
       id
       team {
         id
