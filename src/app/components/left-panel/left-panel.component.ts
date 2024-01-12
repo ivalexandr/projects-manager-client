@@ -11,11 +11,11 @@ import { TAppStore } from '../../app.config';
 import { selectAuthUser } from '../../store/auth/auth.selectors';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { getUserTeams } from '../../store/user-teams/user-teams.actions';
+import { getTeamAccesses } from '../../store/team-accesses/team-accesses.actions';
 import {
-  selectAllUserTeams,
-  selectIsLoadingTeams,
-} from '../../store/user-teams/user-teams.selectors';
+  selectAllTeamAccsesses,
+  selectIsLoadingTeamAccesses,
+} from '../../store/team-accesses/team-accesses.selectors';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -44,8 +44,8 @@ export class LeftPanelComponent implements OnInit {
   @Output() hideSidebar = new EventEmitter(false);
 
   authUser$ = this.store.pipe(select(selectAuthUser));
-  userTeams$ = this.store.pipe(select(selectAllUserTeams));
-  userTeamsIsLoading$ = this.store.pipe(select(selectIsLoadingTeams));
+  teamAccesses$ = this.store.pipe(select(selectAllTeamAccsesses));
+  teamAccessesIsLoading$ = this.store.pipe(select(selectIsLoadingTeamAccesses));
 
   componentText = {
     createTeam: 'Создать команду',
@@ -57,7 +57,7 @@ export class LeftPanelComponent implements OnInit {
   ngOnInit(): void {
     this.authUser$.pipe(takeUntilDestroyed(this.destroyRef$)).subscribe(user => {
       if (user) {
-        this.store.dispatch(getUserTeams());
+        this.store.dispatch(getTeamAccesses());
       }
     });
   }

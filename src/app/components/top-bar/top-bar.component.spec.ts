@@ -12,7 +12,7 @@ import { AuthDialogService } from '../auth-dialog/auth-dialog.service';
 import { ResponseUserDto } from '../../api/models';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import * as authActions from '../../store/auth/auth.actions';
-import { resetUserTeams } from '../../store/user-teams/user-teams.actions';
+import { resetTeamAccesses } from '../../store/team-accesses/team-accesses.actions';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -130,7 +130,7 @@ describe('TopBarComponent', () => {
 
       expect(component.logoutHandler).toHaveBeenCalled();
       expect(store.dispatch).toHaveBeenCalledWith(authActions.logout());
-      expect(store.dispatch).toHaveBeenCalledWith(resetUserTeams());
+      expect(store.dispatch).toHaveBeenCalledWith(resetTeamAccesses());
       done();
     });
   });

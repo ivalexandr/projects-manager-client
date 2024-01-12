@@ -7,7 +7,7 @@ import { selectErrorAuth } from './store/auth/auth.selectors';
 import { TAppStore } from './app.config';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { selectErrorUserTeams } from './store/user-teams/user-teams.selectors';
+import { selectErrorTeamAccesses } from './store/team-accesses/team-accesses.selectors';
 import { selectErrorCreateTeam } from './store/create-team/create-team.selectors';
 import { merge } from 'rxjs';
 import { totalResetErrors } from './store/common/common.actions';
@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
   title = 'projects-manager-client';
 
   authError$ = this.store.pipe(select(selectErrorAuth));
-  userTeamsError$ = this.store.pipe(select(selectErrorUserTeams));
+  userTeamsError$ = this.store.pipe(select(selectErrorTeamAccesses));
   createTeamError$ = this.store.pipe(select(selectErrorCreateTeam));
   projectsInTeamError$ = this.store.pipe(select(selectProjectsInTeamError));
   teamChatMessagesError$ = this.store.pipe(select(selectTeamChatMessagesError));

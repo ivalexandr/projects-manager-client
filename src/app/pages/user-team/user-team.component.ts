@@ -11,12 +11,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, NavigationStart, Router, RouterLink } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { TAppStore } from '../../app.config';
-import * as userTeamsActions from '../../store/user-teams/user-teams.actions';
+import * as userTeamsActions from '../../store/team-accesses/team-accesses.actions';
 import * as projectsInTeamsActions from '../../store/projects-in-team/projects-in-team.actions';
 import {
-  selectActiveTeam,
-  selectIsActiveTeamLoading,
-} from '../../store/user-teams/user-teams.selectors';
+  selectActiveTeamAccess,
+  selectIsActiveTeamAccessLoading,
+} from '../../store/team-accesses/team-accesses.selectors';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { environment } from '../../../environments/environment';
@@ -49,8 +49,8 @@ export class UserTeamComponent implements OnInit, AfterViewInit {
   @ViewChild('pageContainer') pageContainer!: ElementRef;
 
   destroyRef$ = inject(DestroyRef);
-  activeTeamIsLoading$ = this.store.pipe(select(selectIsActiveTeamLoading));
-  activeTeam$ = this.store.pipe(select(selectActiveTeam));
+  isActiveTeamAccessLoading$ = this.store.pipe(select(selectIsActiveTeamAccessLoading));
+  activeTeamAccess$ = this.store.pipe(select(selectActiveTeamAccess));
 
   componentText = {
     leader: 'Лидер команды',
@@ -77,7 +77,7 @@ export class UserTeamComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.activatedRouter.params.pipe(takeUntilDestroyed(this.destroyRef$)).subscribe(params => {
       const id = params['id'] as string;
-      this.store.dispatch(userTeamsActions.getUserTeam({ teamId: id }));
+      this.store.dispatch(userTeamsActions.getTeamAccess({ teamId: id }));
       this.store.dispatch(projectsInTeamsActions.getProjectsInTeam({ teamId: id }));
     });
     this.router.events

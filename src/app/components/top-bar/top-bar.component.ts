@@ -9,7 +9,7 @@ import { Store, select } from '@ngrx/store';
 import { TAppStore } from '../../app.config';
 import { selectAuthUser } from '../../store/auth/auth.selectors';
 import * as authActions from '../../store/auth/auth.actions';
-import { resetUserTeams } from '../../store/user-teams/user-teams.actions';
+import { resetTeamAccesses } from '../../store/team-accesses/team-accesses.actions';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -51,6 +51,6 @@ export class TopBarComponent {
 
   logoutHandler() {
     this.store.dispatch(authActions.logout());
-    this.store.dispatch(resetUserTeams());
+    this.store.dispatch(resetTeamAccesses());
   }
 }

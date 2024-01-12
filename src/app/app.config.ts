@@ -13,8 +13,11 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { AppInitService } from './services/app-init.service';
 import { TCreateTeamReducer, createTeamReducer } from './store/create-team/create-team.reducer';
 import { CraeteTeamEffects } from './store/create-team/create-team.effects';
-import { IUserTeamsReducer, userTeamsReducer } from './store/user-teams/user-teams.reducer';
-import { UserTeamsEffects } from './store/user-teams/user-teams.effects';
+import {
+  ITeamAccessReducer,
+  teamAccessesReducer,
+} from './store/team-accesses/team-accesses.reducer';
+import { UserTeamsEffects } from './store/team-accesses/team-accsseses.effects';
 import {
   ITeamsPaginatedReducer,
   teamPaginatedReducer,
@@ -38,7 +41,7 @@ registerLocaleData(localeRu);
 export type TAppStore = {
   auth: TAuthReducer;
   createTeam: TCreateTeamReducer;
-  userTeams: IUserTeamsReducer;
+  teamAccesses: ITeamAccessReducer;
   teamsPaginated: ITeamsPaginatedReducer;
   projectsInTeam: IProjectsInTeamReducer;
   teamChatMessages: ITeamChatMessagesReducer;
@@ -47,7 +50,7 @@ export type TAppStore = {
 const reducers: ActionReducerMap<TAppStore> = {
   auth: authReducer,
   createTeam: createTeamReducer,
-  userTeams: userTeamsReducer,
+  teamAccesses: teamAccessesReducer,
   teamsPaginated: teamPaginatedReducer,
   projectsInTeam: projectsInTeamReducer,
   teamChatMessages: teamChatMessagesReducer,

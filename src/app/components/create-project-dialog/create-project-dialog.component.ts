@@ -22,6 +22,7 @@ import { TAppStore } from '../../app.config';
 import { Store } from '@ngrx/store';
 import { ICreateProjectInput } from '../../graphql/inputs/create-project.input';
 import * as projectsInTeamActions from '../../store/projects-in-team/projects-in-team.actions';
+import { selectActiveTeamAccess } from '../../store/team-accesses/team-accesses.selectors';
 
 export interface ICreateProjectForm {
   title: AbstractControl<string>;
@@ -46,6 +47,7 @@ export interface ICreateProjectForm {
   styleUrl: './create-project-dialog.component.scss',
 })
 export class CreateProjectDialogComponent {
+  activeTeamAccess = this.store.selectSignal(selectActiveTeamAccess);
   createProjectForm = new FormGroup<ICreateProjectForm>({
     title: new FormControl('', {
       nonNullable: true,
@@ -92,7 +94,7 @@ export class CreateProjectDialogComponent {
 
   submitHandler() {
     if (this.createProjectForm.valid) {
-      const teamId = this.router.url.replace(/\/user-team\//, '');
+      const teamId = this.activeTeamAccess()?.team.id as string;
       const createProject: ICreateProjectInput = {
         teamId,
         title: this.title.value,

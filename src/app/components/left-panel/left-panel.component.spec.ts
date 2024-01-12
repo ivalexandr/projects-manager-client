@@ -11,6 +11,8 @@ import { ResponseUserDto } from '../../api/models';
 import { RouterModule } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { ITeam } from '../../graphql/models/team';
+import { ITeamAccess } from '../../graphql/models/team-access';
+import { TeamAccessStatus } from '../../graphql/enums/team-access-status.enum';
 
 const mockStore = jasmine.createSpyObj('Store', ['dispatch', 'select', 'pipe']);
 
@@ -43,8 +45,8 @@ describe('LeftPanelComponent', () => {
     component = fixture.componentInstance;
 
     component.authUser$ = of(null);
-    component.userTeams$ = of([]);
-    component.userTeamsIsLoading$ = of(false);
+    component.teamAccesses$ = of([]);
+    component.teamAccessesIsLoading$ = of(false);
 
     hideSidebarSpy = spyOn(component.hideSidebar, 'emit');
     fixture.detectChanges();
@@ -87,7 +89,7 @@ describe('LeftPanelComponent', () => {
 
   it('Should display spinner when loading', done => {
     component.authUser$ = of(mockUser);
-    component.userTeamsIsLoading$ = of(true);
+    component.teamAccessesIsLoading$ = of(true);
     fixture.detectChanges();
 
     fixture.whenStable().then(() => {
@@ -102,20 +104,26 @@ describe('LeftPanelComponent', () => {
   });
 
   it('Should display a list of commands after loading', done => {
-    const mockTeams: ITeam[] = [
+    const mockTeams: ITeamAccess[] = [
       {
         id: '1234',
-        avatar: 'qwerty.jpg',
-        name: 'Team 1',
-      } as ITeam,
+        status: TeamAccessStatus.ACTIVE,
+        team: {
+          name: 'Team 1',
+          avatar: 'asdasd.jpg',
+        } as ITeam,
+      } as ITeamAccess,
       {
-        id: '5678',
-        avatar: 'asdfgh.jpg',
-        name: 'Team 2',
-      } as ITeam,
+        id: '56789',
+        status: TeamAccessStatus.ACTIVE,
+        team: {
+          name: 'Team 2',
+          avatar: 'asdasd.jpg',
+        } as ITeam,
+      } as ITeamAccess,
     ];
     component.authUser$ = of(mockUser);
-    component.userTeams$ = of(mockTeams);
+    component.teamAccesses$ = of(mockTeams);
     fixture.detectChanges();
 
     fixture.whenStable().then(() => {
@@ -127,8 +135,8 @@ describe('LeftPanelComponent', () => {
       const matList = sidebarBodyList.query(By.css('.mat-mdc-list'));
       expect(matList).toBeTruthy();
       expect(matList.children.length).toBe(2);
-      expect(matList.children[0].nativeElement.textContent).toContain(mockTeams[0].name);
-      expect(matList.children[1].nativeElement.textContent).toContain(mockTeams[1].name);
+      expect(matList.children[0].nativeElement.textContent).toContain(mockTeams[0].team.name);
+      expect(matList.children[1].nativeElement.textContent).toContain(mockTeams[1].team.name);
       done();
     });
   });

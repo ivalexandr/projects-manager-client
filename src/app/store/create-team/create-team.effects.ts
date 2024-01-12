@@ -4,7 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { TAppStore } from '../../app.config';
 import * as createTeamActions from './create-team.actions';
-import * as userTeamsActions from '../user-teams/user-teams.actions';
+import * as userTeamsActions from '../team-accesses/team-accesses.actions';
 import { catchError, map, of, switchMap, tap, withLatestFrom } from 'rxjs';
 import { selectCreateTeamFromForm } from './create-team.selectors';
 
@@ -19,8 +19,8 @@ export class CraeteTeamEffects {
         this.teamService.createTeam(createTeamData).pipe(
           tap(result => {
             if (result.data) {
-              const team = result.data.createTeam;
-              this.store.dispatch(userTeamsActions.addTeam({ team }));
+              const teamAccess = result.data.createTeam;
+              this.store.dispatch(userTeamsActions.addTeamAccess({ teamAccess }));
             }
           }),
           map(() => createTeamActions.createTeamSuccess()),

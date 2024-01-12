@@ -15,24 +15,26 @@
     <h2 class="sidebar-heading mat-subheading-2">{{ componentText.myTeams }}</h2>
     <div class="sidebar-body">
       <div class="sidebar-body-list">
-        @if (userTeamsIsLoading$ | async) {
+        @if (teamAccessesIsLoading$ | async) {
           <div class="sidebar-body-spinner">
             <mat-spinner />
           </div>
         } @else {
           <mat-list>
-            @for (team of userTeams$ | async; track team.id) {
+            @for (teamAccess of teamAccesses$ | async; track teamAccess.id) {
               <mat-list-item
                 [lines]="4"
-                [routerLink]="['user-team', team.id]"
+                [routerLink]="['user-team', teamAccess.team.id]"
                 [routerLinkActive]="'active-team'"
                 class="sidebar-mat-list-item">
                 <div class="sidebar-body-item">
                   <app-avatar
                     matListItemAvatar
-                    [name]="team.name"
-                    [imgSource]="team.avatar || ''" />
-                  <span matListItemTitle class="sidebar-body-item__name">{{ team.name }}</span>
+                    [name]="teamAccess.team.name"
+                    [imgSource]="teamAccess.team.avatar || ''" />
+                  <span matListItemTitle class="sidebar-body-item__name">{{
+                    teamAccess.team.name
+                  }}</span>
                 </div>
               </mat-list-item>
             }

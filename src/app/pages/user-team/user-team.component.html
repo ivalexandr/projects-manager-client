@@ -1,27 +1,30 @@
 <div #pageContainer class="user-team" @pageAnimations>
-  @if (activeTeamIsLoading$ | async) {
+  @if (isActiveTeamAccessLoading$ | async) {
     <div class="user-team-loader">
       <mat-spinner />
     </div>
   } @else {
-    <ng-container *ngIf="activeTeam$ | async as team">
+    <ng-container *ngIf="activeTeamAccess$ | async as teamAccess">
       <div class="user-team-banner">
-        @if (team.banner) {
-          <img [src]="uploadLink + team.banner" alt="team-banner" />
+        @if (teamAccess.team.banner) {
+          <img [src]="uploadLink + teamAccess.team.banner" alt="team-banner" />
         }
       </div>
       <div class="user-team-avatar">
-        <app-avatar [name]="team.name" [imgSource]="team.avatar" />
-        <h1 class="user-team-avatar__name">{{ team.name }}</h1>
+        <app-avatar [name]="teamAccess.team.name" [imgSource]="teamAccess.team.avatar" />
+        <h1 class="user-team-avatar__name">{{ teamAccess.team.name }}</h1>
       </div>
       <div class="user-team-leader">
         <span class="user-team-leader__subtitle">{{ componentText.leader }}</span>
         <h2 class="user-team-leader__heading">
-          {{ team.leader.username }}
+          {{ teamAccess.team.leader.username }}
         </h2>
       </div>
       <div class="user-team-chat">
-        <button mat-flat-button color="accent" [routerLink]="['/team-chat', team.teamChat.id]">
+        <button
+          mat-flat-button
+          color="accent"
+          [routerLink]="['/team-chat', teamAccess.team.teamChat.id]">
           {{ componentText.chat }}
         </button>
       </div>
