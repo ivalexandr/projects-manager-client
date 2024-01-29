@@ -11,13 +11,18 @@ import { TAppStore } from '../../app.config';
 import { selectAuthUser } from '../../store/auth/auth.selectors';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { getTeamAccesses } from '../../store/team-accesses/team-accesses.actions';
+import {
+  acceptingInvitation,
+  decliningInvitation,
+  getTeamAccesses,
+} from '../../store/team-accesses/team-accesses.actions';
 import {
   selectAllTeamAccsesses,
   selectIsLoadingTeamAccesses,
 } from '../../store/team-accesses/team-accesses.selectors';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TeamAccessStatus } from '../../graphql/enums/team-access-status.enum';
 
 @Component({
   selector: 'app-left-panel',
@@ -50,9 +55,15 @@ export class LeftPanelComponent implements OnInit {
   componentText = {
     createTeam: 'Создать команду',
     myTeams: 'Мои команды',
+    acceptingBtn: 'Принять',
+    decliningBtn: 'Отказаться',
   };
 
   constructor(private readonly store: Store<TAppStore>) {}
+
+  get teamAccessStatus() {
+    return TeamAccessStatus;
+  }
 
   ngOnInit(): void {
     this.authUser$.pipe(takeUntilDestroyed(this.destroyRef$)).subscribe(user => {
@@ -65,5 +76,13 @@ export class LeftPanelComponent implements OnInit {
   clickArrowBack() {
     this.isHideSidebar.update(state => !state);
     this.hideSidebar.emit();
+  }
+
+  declineButtonHandler(teamId: string) {
+    this.store.dispatch(decliningInvitation({ teamId, isAnswer: false }));
+  }
+
+  acceptingButtonHandler(teamId: string) {
+    this.store.dispatch(acceptingInvitation({ teamId, isAnswer: true }));
   }
 }

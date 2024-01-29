@@ -20,14 +20,18 @@
             <mat-spinner />
           </div>
         } @else {
-          <mat-list>
+          <mat-list class="sidebar-body-list__self">
             @for (teamAccess of teamAccesses$ | async; track teamAccess.id) {
               <mat-list-item
                 [lines]="4"
-                [routerLink]="['user-team', teamAccess.team.id]"
+                [routerLink]="
+                  teamAccess.status === teamAccessStatus.ACTIVE
+                    ? ['user-team', teamAccess.team.id]
+                    : null
+                "
                 [routerLinkActive]="'active-team'"
                 class="sidebar-mat-list-item">
-                <div class="sidebar-body-item">
+                <div matListItemLine class="sidebar-body-item">
                   <app-avatar
                     matListItemAvatar
                     [name]="teamAccess.team.name"
@@ -36,6 +40,22 @@
                     teamAccess.team.name
                   }}</span>
                 </div>
+                @if (teamAccess.status === teamAccessStatus.PENDING) {
+                  <div matListItemLine class="sidebar-body-item__accepting">
+                    <button
+                      mat-flat-button
+                      color="accent"
+                      (click)="acceptingButtonHandler(teamAccess.team.id)">
+                      {{ componentText.acceptingBtn }}
+                    </button>
+                    <button
+                      mat-flat-button
+                      color="warn"
+                      (click)="declineButtonHandler(teamAccess.team.id)">
+                      {{ componentText.decliningBtn }}
+                    </button>
+                  </div>
+                }
               </mat-list-item>
             }
           </mat-list>

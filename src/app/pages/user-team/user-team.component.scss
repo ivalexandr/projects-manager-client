@@ -4,6 +4,8 @@
   padding-top: 20px;
   overflow: hidden;
   padding-left: 10px;
+  display: flex;
+  flex-direction: column;
 
   &-loader {
     position: absolute;
@@ -52,5 +54,10 @@
 
   &-tabs {
     margin-top: 180px;
+    height: 100%;
+
+    &__self {
+      height: 100%;
+    }
   }
 }

@@ -40,6 +40,36 @@ export class UserTeamsEffects {
     )
   );
 
+  acceptingInvitation$ = createEffect(() =>
+    this.actions.pipe(
+      ofType(userTeamsActions.acceptingInvitation),
+      switchMap(action =>
+        this.teamAccessService.acceptingInvitation(action.teamId, action.isAnswer).pipe(
+          map(({ data }) =>
+            userTeamsActions.acceptingInvitationSuccess({
+              teamAccess: { id: data!.acceptingInvitation.id, changes: data!.acceptingInvitation },
+            })
+          ),
+          catchError(err => of(userTeamsActions.acceptingInvitationFailure({ error: err.message })))
+        )
+      )
+    )
+  );
+
+  decliningInvitation$ = createEffect(() =>
+    this.actions.pipe(
+      ofType(userTeamsActions.decliningInvitation),
+      switchMap(action =>
+        this.teamAccessService.acceptingInvitation(action.teamId, action.isAnswer).pipe(
+          map(({ data }) =>
+            userTeamsActions.decliningInvitationSuccess({ teamAccess: data!.acceptingInvitation })
+          ),
+          catchError(err => of(userTeamsActions.decliningInvitationFailure({ error: err.message })))
+        )
+      )
+    )
+  );
+
   constructor(
     private readonly actions: Actions,
     private readonly teamAccessService: TeamAccessService

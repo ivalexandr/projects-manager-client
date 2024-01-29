@@ -1,0 +1,26 @@
+<h3 matDialogTitle>{{ componentText.title }}</h3>
+<div matDialogContent>
+  <form class="add-member-dialog__form" [formGroup]="form" (ngSubmit)="submitFormHandler()">
+    <mat-form-field>
+      <mat-label>{{ componentText.form.username }}</mat-label>
+      <input matInput formControlName="username" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ componentText.form.chooseRole }}</mat-label>
+      <mat-select formControlName="role">
+        @for (role of teamRoleValues; track role) {
+          @if (role !== teamRole.LEADER) {
+            <mat-option [value]="role">
+              {{ componentText.role[role] }}
+            </mat-option>
+          }
+        }
+      </mat-select>
+    </mat-form-field>
+    <div class="add-member-dialog__actions" matDialogActions>
+      <button [disabled]="formInvalid" mat-flat-button color="accent">
+        {{ componentText.form.added }}
+      </button>
+    </div>
+  </form>
+</div>

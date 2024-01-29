@@ -1,5 +1,8 @@
 .projects-list {
   padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
   &-create {
     display: flex;
@@ -11,8 +14,13 @@
   }
 
   &-self {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
     &__list {
-      height: 45vh;
+      flex-grow: 1;
+      height: 100px;
       overflow-y: auto;
     }
 

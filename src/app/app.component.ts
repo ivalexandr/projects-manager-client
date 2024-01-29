@@ -13,6 +13,7 @@ import { merge } from 'rxjs';
 import { totalResetErrors } from './store/common/common.actions';
 import { selectProjectsInTeamError } from './store/projects-in-team/projects-in-team.selectors';
 import { selectTeamChatMessagesError } from './store/team-chat-mesasges/team-chat-messages.selectors';
+import { selectTeamAccessesForTeamError } from './store/team-accesses-for-team/team-accesses-for-team.selectors';
 
 @Component({
   selector: 'app-root',
@@ -25,10 +26,11 @@ export class AppComponent implements OnInit {
   title = 'projects-manager-client';
 
   authError$ = this.store.pipe(select(selectErrorAuth));
-  userTeamsError$ = this.store.pipe(select(selectErrorTeamAccesses));
+  teamAccessesError$ = this.store.pipe(select(selectErrorTeamAccesses));
   createTeamError$ = this.store.pipe(select(selectErrorCreateTeam));
   projectsInTeamError$ = this.store.pipe(select(selectProjectsInTeamError));
   teamChatMessagesError$ = this.store.pipe(select(selectTeamChatMessagesError));
+  teamAccessesForTeamError$ = this.store.pipe(select(selectTeamAccessesForTeamError));
 
   constructor(
     private readonly store: Store<TAppStore>,
@@ -38,10 +40,11 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     merge(
       this.authError$,
-      this.userTeamsError$,
+      this.teamAccessesError$,
       this.createTeamError$,
       this.projectsInTeamError$,
-      this.teamChatMessagesError$
+      this.teamChatMessagesError$,
+      this.teamAccessesForTeamError$
     )
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(error => {

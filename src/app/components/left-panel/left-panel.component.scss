@@ -7,6 +7,8 @@
   background: var(--mat-toolbar-container-background-color);
   border-bottom-right-radius: 20px;
   transition: border-bottom-right-radius 0.5 ease-in-out;
+  display: flex;
+  flex-direction: column;
 
   &-actions {
     display: flex;
@@ -30,8 +32,15 @@
   }
 
   &-body {
+    flex-grow: 1;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+
     &-list {
-      max-height: 75vh;
+      flex-grow: 1;
+      height: 100px;
       overflow-y: auto;
       -ms-overflow-style: none;
       scrollbar-width: none;
@@ -49,14 +58,24 @@
 
     &-item {
       display: flex;
-      justify-content: space-between;
       align-items: center;
       padding: 0 10px;
       cursor: pointer;
 
+      &:not(:last-child) {
+        margin-bottom: 20px;
+      }
+
       &__name {
         transition: opacity 0.5s ease-in-out;
         font-size: 20px;
+        margin-left: auto;
+      }
+
+      &__accepting {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
       }
     }
 
@@ -95,7 +114,7 @@
     animation-name: active-team-animate;
     animation-duration: 1.5s;
     animation-fill-mode: forwards;
-    bottom: 0;
+    bottom: 15px;
     height: 2px;
     background-color: #424242;
   }

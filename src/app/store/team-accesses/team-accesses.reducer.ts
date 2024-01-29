@@ -59,5 +59,16 @@ export const teamAccessesReducer = createReducer(
     error,
   })),
   on(teamAccessesActions.resetTeamAccesses, state => teamAccessAdapter.removeAll(state)),
+  on(teamAccessesActions.acceptingInvitationSuccess, (state, { teamAccess }) =>
+    teamAccessAdapter.updateOne(teamAccess, state)
+  ),
+  on(teamAccessesActions.acceptingInvitationFailure, (state, { error }) => ({
+    ...state,
+    error,
+  })),
+  on(teamAccessesActions.decliningInvitationSuccess, (state, { teamAccess }) =>
+    teamAccessAdapter.removeOne(teamAccess.id, state)
+  ),
+  on(teamAccessesActions.decliningInvitationFailure, (state, { error }) => ({ ...state, error })),
   on(totalResetErrors, state => ({ ...state, error: null }))
 );

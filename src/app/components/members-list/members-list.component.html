@@ -1,0 +1,37 @@
+<div class="members-list">
+  @if (teamAccessesIsLoading$ | async) {
+    <div class="members-list-spinner">
+      <mat-spinner />
+    </div>
+  } @else {
+    @if ((teamAccessActive$ | async)?.teamRole === teamRole.LEADER) {
+      <div class="members-list-add">
+        <button mat-flat-button color="primary" (click)="addMemberClickHandler()">
+          {{ componentText.button }}
+        </button>
+      </div>
+    }
+    <mat-list class="members-list__self">
+      @for (teamAccess of teamAccesses$ | async; track teamAccess.id) {
+        <mat-list-item>
+          <span matListItemTitle>{{ teamAccess.user.username }}</span>
+          <span matListItemLine>{{ teamAccess.user.email }}</span>
+          <span matListItemLine class="members-list__status">{{
+            componentText.status[teamAccess.status]
+          }}</span>
+          <span matListItemMeta>{{ componentText.role[teamAccess.teamRole] }}</span>
+          @if (
+            (teamAccessActive$ | async)?.teamRole === teamRole.LEADER &&
+            teamAccess.teamRole !== teamRole.LEADER
+          ) {
+            <div matListItemMeta>
+              <button color="warn" mat-icon-button (click)="removeButtonHandler(teamAccess.id)">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          }
+        </mat-list-item>
+      }
+    </mat-list>
+  }
+</div>

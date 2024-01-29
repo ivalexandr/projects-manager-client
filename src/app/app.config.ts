@@ -35,6 +35,11 @@ import {
   teamChatMessagesReducer,
 } from './store/team-chat-mesasges/team-chat-messages.reducer';
 import { TeamChatMessagesEffects } from './store/team-chat-mesasges/team-chat-messages.effects';
+import {
+  IteamAccessesForTeamReducer,
+  teamAccessesForTeamReducer,
+} from './store/team-accesses-for-team/team-accesses-for-team.reducer';
+import { TeamAccessesForTeamEffects } from './store/team-accesses-for-team/team-accesses-for-team.effects';
 
 registerLocaleData(localeRu);
 
@@ -45,6 +50,7 @@ export type TAppStore = {
   teamsPaginated: ITeamsPaginatedReducer;
   projectsInTeam: IProjectsInTeamReducer;
   teamChatMessages: ITeamChatMessagesReducer;
+  teamAccessesForTeam: IteamAccessesForTeamReducer;
 };
 
 const reducers: ActionReducerMap<TAppStore> = {
@@ -54,6 +60,7 @@ const reducers: ActionReducerMap<TAppStore> = {
   teamsPaginated: teamPaginatedReducer,
   projectsInTeam: projectsInTeamReducer,
   teamChatMessages: teamChatMessagesReducer,
+  teamAccessesForTeam: teamAccessesForTeamReducer,
 };
 
 const effects = [
@@ -63,6 +70,7 @@ const effects = [
   TeamsPaginatedEffects,
   ProjectsInTeamEffects,
   TeamChatMessagesEffects,
+  TeamAccessesForTeamEffects,
 ];
 
 export const appConfig: ApplicationConfig = {

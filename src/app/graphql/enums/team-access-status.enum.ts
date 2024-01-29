@@ -1,6 +1,6 @@
 export enum TeamAccessStatus {
-  PENDING = 'pending',
-  DECLINED = 'decline',
-  ACTIVE = 'active',
-  INACTIVE = 'inactive',
+  PENDING = 'PENDING',
+  DECLINED = 'DECLINED',
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
 }

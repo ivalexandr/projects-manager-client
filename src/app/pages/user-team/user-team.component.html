@@ -29,11 +29,11 @@
         </button>
       </div>
       <div class="user-team-tabs">
-        <mat-tab-group color="accent">
+        <mat-tab-group color="accent" class="user-team-tabs__self">
           <mat-tab [label]="componentText.tabs.projects">
             <app-projects-list />
           </mat-tab>
-          <mat-tab [label]="componentText.tabs.members"> Здесь будет список участников... </mat-tab>
+          <mat-tab [label]="componentText.tabs.members"> <app-members-list /> </mat-tab>
           <mat-tab [label]="componentText.tabs.statistics">
             Здесь будет статистика команды...
           </mat-tab>

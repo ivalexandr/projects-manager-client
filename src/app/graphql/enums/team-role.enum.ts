@@ -1,5 +1,5 @@
 export enum TeamRole {
-  LEADER = 'leader',
-  MODERATOR = 'moderator',
-  PARTICIPANT = 'participant',
+  LEADER = 'LEADER',
+  MODERATOR = 'MODERATOR',
+  PARTICIPANT = 'PARTICIPANT',
 }

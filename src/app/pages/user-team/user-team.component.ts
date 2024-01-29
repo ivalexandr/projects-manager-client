@@ -11,8 +11,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, NavigationStart, Router, RouterLink } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { TAppStore } from '../../app.config';
-import * as userTeamsActions from '../../store/team-accesses/team-accesses.actions';
-import * as projectsInTeamsActions from '../../store/projects-in-team/projects-in-team.actions';
 import {
   selectActiveTeamAccess,
   selectIsActiveTeamAccessLoading,
@@ -27,6 +25,16 @@ import { ProjectsListComponent } from '../../components/projects-list/projects-l
 import { pageAnimations } from '../../common/animations';
 import { AnimationBuilder, animate, style } from '@angular/animations';
 import { filter } from 'rxjs';
+import { MembersListComponent } from '../../components/members-list/members-list.component';
+import {
+  getTeamAccessesForTeam,
+  reseteamAccessesForTeam,
+} from '../../store/team-accesses-for-team/team-accesses-for-team.actions';
+import {
+  getProjectsInTeam,
+  resetProjectsInTeams,
+} from '../../store/projects-in-team/projects-in-team.actions';
+import { getTeamAccess } from '../../store/team-accesses/team-accesses.actions';
 
 @Component({
   selector: 'app-user-team',
@@ -37,6 +45,7 @@ import { filter } from 'rxjs';
     MatButtonModule,
     AvatarComponent,
     ProjectsListComponent,
+    MembersListComponent,
     AsyncPipe,
     NgIf,
     RouterLink,
@@ -77,8 +86,9 @@ export class UserTeamComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.activatedRouter.params.pipe(takeUntilDestroyed(this.destroyRef$)).subscribe(params => {
       const id = params['id'] as string;
-      this.store.dispatch(userTeamsActions.getTeamAccess({ teamId: id }));
-      this.store.dispatch(projectsInTeamsActions.getProjectsInTeam({ teamId: id }));
+      this.store.dispatch(getTeamAccess({ teamId: id }));
+      this.store.dispatch(getProjectsInTeam({ teamId: id }));
+      this.store.dispatch(getTeamAccessesForTeam({ teamId: id }));
     });
     this.router.events
       .pipe(
@@ -86,7 +96,8 @@ export class UserTeamComponent implements OnInit, AfterViewInit {
         takeUntilDestroyed(this.destroyRef$)
       )
       .subscribe(() => {
-        this.store.dispatch(projectsInTeamsActions.resetProjectsInTeams());
+        this.store.dispatch(resetProjectsInTeams());
+        this.store.dispatch(reseteamAccessesForTeam());
       });
   }
 
